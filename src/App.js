@@ -8,17 +8,17 @@ import {
   getInvites
 } from './actions'
 import { Button, Media } from 'react-bootstrap';
-import Invites from './components/invites';
+import InvitesComponent from './components/invites';
 class App extends Component {
   componentDidMount() {
     this.props.getInvites()
   }
   render() {
     return (
-      <div className="App">
+      <div key="999" className="App">
         <div className="container">
-        
-          <Invites invites={this.props.invites}/>
+
+          <InvitesComponent invites={this.props.invites}/>
         </div>
         <footer className="App-footer">
           <h1 className="App-title">Built With React & Redux</h1>

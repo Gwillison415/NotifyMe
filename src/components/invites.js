@@ -17,13 +17,11 @@ export const InvitesComponent = ({
 }) => {
   let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
 
-  var subject;
-  var url;
-
-  const invitations = invites.invites.map((invite, idx) => (
-    subject = invite.invite.match(/\[[^\]]+\]/, 'g')
-    url = invite.invite.match(urlRegex, 'mg')
-    <InviteComponent key={idx}
+  const invitations = invites.invites.map((invite, idx) => {
+    let subject = invite.invite.match(/\[[^\]]+\]/, 'g')
+    let url = invite.invite.match(urlRegex, 'mg')
+    return (
+      <InviteComponent inviteKey={idx}
       sender={invite.sender_id}
       inviteMsg={invite.invite}
       inviteSubject={subject[0]}
@@ -33,15 +31,18 @@ export const InvitesComponent = ({
       situationID={invite.sig_id}
       inviteSelected={invite.selected}/>
 
-  ))
+  )}
+)
+
   // let messageDetailsObject = createMessageDetailsObject(invite.invite)
   return(
     <div className="card" >
-      {invitations inviteSubject={messageDetailsObject.subject[0]}
-      inviteURL={messageDetailsObject.url[0]} }
+      {invitations  }
     </div>
 
   )
 }
-
+//
+// inviteSubject={messageDetailsObject.subject[0]}
+// inviteURL={messageDetailsObject.url[0]}
 export default InvitesComponent;

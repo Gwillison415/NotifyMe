@@ -21,7 +21,7 @@ export const createVectorCSSClass = (source) => {
 
 export const InviteComponent = ({
   sender,
-  key,
+  inviteKey,
   inviteMsg,
   inviteSubject,
   inviteURL,
@@ -62,7 +62,7 @@ export const InviteComponent = ({
               <span className="glyphicon glyphicon-heart"  aria-hidden="true"></span>
 
                 <a href={inviteURL} data-tip={inviteSubject}>More Info</a>
-                <ReactTooltip key={key} className='extraClass'  delayHide={1000} effect='solid'/>
+                <ReactTooltip key={inviteKey * 100} className='extraClass'  delayHide={1000} effect='solid'/>
             </button>
           </div>
           <div className="btn-group" role="group">
