@@ -20,6 +20,19 @@ export default (state = initialState, action) => {
     case INVITES_REQUEST_SUCCESS:
       return {
         ...state,
+        fetchingInvites: false,
         invites: action.invites,
       }
+    default:
+      return state
+  }
+}
+
+function toggleProperty(invites, invite, property) {
+  const index = invites.indexOf(invite)
+  return [
+    ...invites.slice(0, index),
+    { ...invite, [property]: !invite[property] },
+    ...invites.slice(index + 1),
+  ];
 }

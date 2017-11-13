@@ -7,22 +7,29 @@ import './App.css';
 import {
   getInvites
 } from './actions'
-
+import { Button, Media } from 'react-bootstrap';
+import Invites from './components/invites';
 class App extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.getInvites()
   }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <div className="container">
+        
+          <Invites invites={this.props.invites}/>
+        </div>
+        <footer className="App-footer">
           <h1 className="App-title">Built With React & Redux</h1>
           <span>
             <img src={logo} className="App-logo" alt="logo" />
 
             <img src={redux_logo} className="App-logo" alt="redux Logo"/>
           </span>
-        </header>
+        </footer>
+
+
 
       </div>
     );
@@ -30,7 +37,14 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  messages: state.messages.messages,
+  invites: state.invites,
 })
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getInvites,
 
-export default App;
+}, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

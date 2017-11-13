@@ -1,4 +1,4 @@
-const invitationsJson = {
+export const invitationsJson = {
     "invites": [{
         "invite_id": 1,
         "sender_id": "jeff",
@@ -162,4 +162,4 @@ const invitationsJson = {
     }]
 }
 
-export default invitationsJson;
+// export default invitationsJson;
