@@ -83,8 +83,8 @@ export const InviteComponent = ({
   let sourceClass = createVectorCSSClass(vector);
   let timeCreated = NOTIFY_API.returnDate(inviteTime);
 
-  // findTimeElapsed(inviteTime)
-  console.log('date since', getDateTimeSince(new Date(inviteTime + 1000)));
+  findTimeElapsed(inviteTime)
+  console.log('date since', getDateTimeSince(new Date(moment.unix(inviteTime))));
   return (
 
 
