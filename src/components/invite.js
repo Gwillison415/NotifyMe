@@ -19,55 +19,17 @@ export const createVectorCSSClass = (source) => {
       return "fa fa-chain-broken"
   }
 }
-function getDaysInMonth(month,year) {
-    if( typeof year == "undefined") year = 1999; // any non-leap-year works as default
-    var currmon = new Date(year,month),
-        nextmon = new Date(year,month+1);
-    return Math.floor((nextmon.getTime()-currmon.getTime())/(24*3600*1000));
-}
-function getDateTimeSince(target) { // target should be a Date object
-    var now = new Date(), yd, md, dd, hd, nd, sd, out = [];
 
-    yd = now.getFullYear()-target.getFullYear();
-    console.log(now.getFullYear(), target.getFullYear());
-    md = now.getMonth()-target.getMonth();
-    dd = now.getDate()-target.getDate();
-    hd = now.getHours()-target.getHours();
-    nd = now.getMinutes()-target.getMinutes();
-    sd = now.getSeconds()-target.getSeconds();
 
-    if( md < 0) {yd--; md += 12;}
-    if( dd < 0) {
-        md--;
-        dd += getDaysInMonth(now.getMonth()-1,now.getFullYear());
-    }
-    if( hd < 0) {dd--; hd += 24;}
-    if( nd < 0) {hd--; nd += 60;}
-    if( sd < 0) {nd--; sd += 60;}
+// export const  findTimeElapsed = (timestamp) => {
+//   let now = parseInt(Date.now() / 1000)
+//   let elapsedUnixTime =  now - timestamp
+//   let offset =new Date(elapsedUnixTime)
+//   let m1 = moment(now)
+//   let m2 = moment(new Date(timestamp))
+//   console.log('starttime', NOTIFY_API.returnDate(timestamp), NOTIFY_API.returnDate(now),  m1.diff(m2, "years", true));
+// }
 
-    if( yd > 0) out.push( yd+" year"+(yd == 1 ? "" : "s"));
-    if( md > 0) out.push( md+" month"+(md == 1 ? "" : "s"));
-    if( dd > 0) out.push( dd+" day"+(dd == 1 ? "" : "s"));
-    if( hd > 0) out.push( hd+" hour"+(hd == 1 ? "" : "s"));
-    if( nd > 0) out.push( nd+" minute"+(nd == 1 ? "" : "s"));
-    if( sd > 0) out.push( sd+" second"+(sd == 1 ? "" : "s"));
-    return out.join(" ");
-}
-
-export const  findTimeElapsed = (timestamp) => {
-  let now = parseInt(Date.now() / 1000)
-  let elapsedUnixTime =  now - timestamp
-  let offset =new Date(elapsedUnixTime)
-  let m1 = moment(now)
-  let m2 = moment(new Date(timestamp))
-  console.log('starttime', NOTIFY_API.returnDate(timestamp), NOTIFY_API.returnDate(now),  m1.diff(m2, "years", true));
-}
-function findTimeElapsed1(timestamp) {
-  let now = moment(new Date())
-  let createDate = moment(timestamp);
-  console.log(now, createDate);
-  console.log(moment.diff(timestamp, 'days'));
-}
 export const InviteComponent = ({
   sender,
   inviteKey,
@@ -83,8 +45,7 @@ export const InviteComponent = ({
   let sourceClass = createVectorCSSClass(vector);
   let timeCreated = NOTIFY_API.returnDate(inviteTime);
 
-  findTimeElapsed(inviteTime)
-  console.log('date since', getDateTimeSince(new Date(moment.unix(inviteTime))));
+  console.log('date since', NOTIFY_API.getDateTimeSince(new Date(moment.unix(inviteTime))));
   return (
 
 
@@ -98,9 +59,10 @@ export const InviteComponent = ({
         <div className=" useravatar">
           <img alt="" src={NOTIFY_API.findAvatar(sender)}/>
         </div>
+
           <div className="card-body">
             <span className="card-title text-capitalize">From: {sender}</span>
-
+            
           </div>
         </div>
         <div className="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
