@@ -5,10 +5,10 @@
   "dependencies": {
     "bootstrap": "3",
     "font-awesome": "^4.7.0",
-    "moment": "^2.19.2",
-    "react": "^16.1.0",
+    "moment": "^2.9.xx",
+    "react": "^16.1.1",
     "react-bootstrap": "^0.31.5",
-    "react-dom": "^16.1.0",
+    "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
     "react-tooltip": "^3.4.0",

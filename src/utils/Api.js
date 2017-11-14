@@ -4,7 +4,7 @@ export default class NOTIFY_API {
 
   static returnDate(unix) {
     let date = new Date(unix);
-    let time = moment.unix(unix).format('dd, MMM YYYY, HH:mm')
+    let time = moment.unix(unix).format('Do, MMM YYYY, HH:mm')
     return time
   }
 
