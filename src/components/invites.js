@@ -21,7 +21,7 @@ export const InvitesComponent = ({
     let subject = invite.invite.match(/\[[^\]]+\]/, 'g')
     let url = invite.invite.match(urlRegex, 'mg')
     return (
-      <InviteComponent inviteKey={idx}
+      <InviteComponent key={idx} inviteKey={idx}
       sender={invite.sender_id}
       inviteMsg={invite.invite}
       inviteSubject={subject[0]}
@@ -29,7 +29,8 @@ export const InvitesComponent = ({
       vector={invite.vector}
       status={invite.status}
       situationID={invite.sig_id}
-      inviteSelected={invite.selected}/>
+      inviteSelected={invite.selected}
+    inviteTime={invite.invite_time}/>
 
   )}
 )
@@ -37,7 +38,7 @@ export const InvitesComponent = ({
   // let messageDetailsObject = createMessageDetailsObject(invite.invite)
   return(
     <div className="card" >
-      {invitations  }
+      {invitations}
     </div>
 
   )

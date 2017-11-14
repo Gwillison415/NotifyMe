@@ -2,6 +2,8 @@ import React from 'react'
 import {Grid, Media, Image} from 'react-bootstrap';
 import {imageContent} from '../static/imageSources';
 import ReactTooltip from 'react-tooltip'
+import NOTIFY_API from '../utils/Api';
+
 import './invite.css';
 var moment = require('moment');
 
@@ -18,6 +20,9 @@ export const createVectorCSSClass = (source) => {
   }
 }
 
+// export const function findCurrentTime() {
+//
+// }
 
 export const InviteComponent = ({
   sender,
@@ -28,10 +33,11 @@ export const InviteComponent = ({
   vector,
   status,
   situationID,
+  inviteTime
 
 }) => {
   let sourceClass = createVectorCSSClass(vector)
-  // let messageDetails = createMessageDetailsObject(inviteMsg)
+
 
   return (
 
@@ -39,12 +45,15 @@ export const InviteComponent = ({
   <div className="col-lg-12 col-sm-9">
     <div className="card hovercard">
       <div className="card-background">
+
         <img className="card-bkimg" alt="" src="https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/10347425_10154552968930344_3019511571965366529_n.jpg?oh=589ec00f0630750a24196b15fb0ccd76&oe=5A943FA8"/>
         </div>
-        <div className="useravatar">
-          <img alt="" src="https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/10347425_10154552968930344_3019511571965366529_n.jpg?oh=589ec00f0630750a24196b15fb0ccd76&oe=5A943FA8"/></div>
-          <div className="card-info">
-            <span className="card-title">From: {sender}</span>
+        {/* <div className="card-body"></div> */}
+        <div className=" useravatar">
+          <img alt="" src={NOTIFY_API.findAvatar(sender)}/>
+        </div>
+          <div className="card-body">
+            <span className="card-title text-capitalize">From: {sender}</span>
 
           </div>
         </div>

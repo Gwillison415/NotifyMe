@@ -15,7 +15,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div key="999" className="App">
+      <div  className="App">
         <div className="container">
 
           <InvitesComponent invites={this.props.invites}/>

@@ -29,6 +29,7 @@ such that there is less disruption / bugs / thinking as you move between environ
   } else {
     //exersize calls for mock data (provided)
     //TODO expand to react to each mockJson, mockJsonUpdate
+    // for fun, because this framework will 'react' to new data
     return (dispatch) => {dispatch({
       type: INVITES_REQUEST_SUCCESS,
       invites: mockJson.invites,
