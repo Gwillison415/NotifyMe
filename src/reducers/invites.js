@@ -14,15 +14,18 @@ function createState(json, incomingState) {
   const state = incomingState;
   state.invitesById = {};
   json.forEach((invite, idx) => {
-    state.ids = state.ids.concat(invite[idx]);
-    state.invitesById[invite.idx] = {};
-    state.invitesById[invite.idx].invite = invite.invite;
-    state.invitesById[invite.idx].sender_id = invite.sender_id;
-    state.invitesById[invite.idx].vector = invite.vector;
-    state.invitesById[invite.idx].sig_id = invite.sig_id;
-    state.invitesById[invite.idx].percentComplete =
-    stats.unread / (stats.unread +
-    stats.read);
+    if (state.invitesById[invite.invite_id] !== "null") {
+      return;
+    } else {
+
+      state.ids = state.ids.concat(invite.invite_id);
+      state.invitesById[invite.invite_id] = {};
+      state.invitesById[invite.invite_id].invite = invite.invite;
+      state.invitesById[invite.invite_id].sender_id = invite.sender_id;
+      state.invitesById[invite.invite_id].vector = invite.vector;
+      state.invitesById[invite.invite_id].sig_id = invite.sig_id;
+      state.invitesById[invite.invite_id].percentComplete = 0;
+    }
 
   });
   return { ...state, fetchingInvites: false };
@@ -33,10 +36,7 @@ export default (state = initialState, action) => {
 
   switch (action.type) {
     case INVITES_REQUEST_STARTED:
-      return {
-        ...state,
-        fetchingInvites: true,
-      }
+      return createState(action.response.invites, state);
     case INVITES_REQUEST_SUCCESS:
       return {
         ...state,
@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
     case TOGGLE_JOIN:
     return {
       ...state,
-      invites: toggleProperty(state.invites, action.invite, 'isOpen')
+      invites: toggleProperty(state.invites, action.invite, "someprop")
     }
     default:
       return state

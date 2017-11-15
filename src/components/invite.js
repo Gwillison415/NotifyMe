@@ -1,25 +1,21 @@
 import React from 'react'
-import {Grid, Media, Image} from 'react-bootstrap';
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+
 import {UCDropdown} from './unControlledNavDropDown';
 
-// import $ from 'jquery';
-// import { findDOMNode } from 'react-dom';
 import {
   Card,
   Button,
   CardTitle,
   CardText,
   CardImg,
-  CardImgOverlay,
+
   CardBody,
   CardSubtitle,
-  ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem
+
 } from 'reactstrap';
 
-import {imageContent} from '../static/imageSources';
-import ReactTooltip from 'react-tooltip'
+// import {imageContent} from '../static/imageSources';
+
 // import {toggle} from '../actions';
 import NOTIFY_API from '../utils/Api';
 import './invite.css';
@@ -38,23 +34,8 @@ export const createVectorCSSClass = (source) => {
       return "fa fa-chain-broken"
   }
 }
-const checkMessage = (string) => {
-  if (typeof string !== "string") {
-    throw ("You have corrupt data, What are the backend folks doing around here anyway?")
-  }
-  else {
-    return string;
-  }
-}
-const statusBackground = (parameter) => {
-  switch (parameter) {
-    case "read":
 
-      break;
-    default:
 
-  }
-}
 export const InviteComponent = ({
   sender,
   inviteKey,
@@ -99,13 +80,4 @@ export const InviteComponent = ({
   </Card>)
 }
 
-export const mapStateToProps = (state, ownProps) => {
-  const isOpen = state.invites.isOpen;
-
-  return {
-    isOpen,
-  }
-}
-
-export default connect(mapStateToProps, null)(InviteComponent);
-// export default InviteComponent;
+export default InviteComponent;

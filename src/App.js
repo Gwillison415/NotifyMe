@@ -4,16 +4,14 @@ import {bindActionCreators} from 'redux'
 import logo from './static/logo.svg';
 import redux_logo from './static/redux_logo.svg';
 import './App.css';
-import {getInvites, toggleSelected} from './actions'
-import {Container, Button, Media, Row, Col} from 'reactstrap';
-import { Card, CardImg, CardTitle, CardText, CardDeck,
- CardSubtitle, CardBody } from 'reactstrap';
-// import Transition from 'react-transition-group/Transition';
+import {getInvites} from './actions'
+import {Container} from 'reactstrap';
+
 import InvitesComponent from './components/invites';
-import Situation from './components/situationCard';
+
 import NavToolBar from './components/navbar';
-import FullDesc from './components/list';
-import DropdownComponent from './components/dropdown';
+
+
 
 class App extends Component {
   componentDidMount() {
@@ -27,10 +25,20 @@ class App extends Component {
 
 
       <InvitesComponent invites={this.props.invites}></InvitesComponent>
-    
+
 
     </Container>
+    <div className="App">
+    <header className="App-header">
+      <h1 className="App-title">Built With React & Redux</h1>
+      <span>
+        <img src={logo} className="App-logo" alt="logo" />
 
+        <img src={redux_logo} className="App-logo" alt="redux Logo"/>
+      </span>
+    </header>
+
+  </div>
 
   </Container>
 

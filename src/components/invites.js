@@ -1,26 +1,18 @@
 import React from 'react'
 import {InviteComponent} from './invite';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 
-import {toggle} from '../actions';
+
 import {
   Card,
   CardDeck,
-  CardImg,
-  CardText,
-  CardTitle,
-  CardSubtitle,
-  Button,
-  CardBody
 } from 'reactstrap';
-import injectState from '../utils/utils';
+
 
 export const InvitesComponent = ({invites, toggleBool}) => {
   let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
   let joinRequest = new RegExp(/\bjoin Situation\b/)
   let filterDupesObj = {};
-  var statsObj = {
+  let statsObj = {
     read: 0,
     unread: 0,
   };
@@ -58,25 +50,15 @@ export const InvitesComponent = ({invites, toggleBool}) => {
 
   return (<CardDeck>
     <div className="col">
+      <h2>Unread Messages</h2>
       {invitations[1]}
     </div>
     <div className="col">
-
+      <h2>Read Messages</h2>
       {invitations[0]}
     </div>
   </CardDeck>)
 }
 
-export const mapStateToProps = (state, ownProps) => {
-  const stats = ownProps.statsObj;
 
-  return {
-    stats
-  };
-};
-
-export const mapDispatchToProps = dispatch => bindActionCreators({
-  toggle
-}, dispatch,);
-
-export default injectState(connect(mapStateToProps, mapDispatchToProps)(InvitesComponent));
+export default InvitesComponent
