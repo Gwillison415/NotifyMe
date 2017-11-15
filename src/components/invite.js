@@ -8,6 +8,7 @@ import {UCDropdown} from './unControlledNavDropDown';
 // import { findDOMNode } from 'react-dom';
 import {
   Card,
+  Button,
   CardTitle,
   CardText,
   CardImg,
@@ -37,11 +38,13 @@ export const createVectorCSSClass = (source) => {
       return "fa fa-chain-broken"
   }
 }
-const cleanMessage = (string) => {
+const checkMessage = (string) => {
   if (typeof string !== "string") {
     throw ("You have corrupt data, What are the backend folks doing around here anyway?")
   }
-
+  else {
+    return string;
+  }
 }
 
 export const InviteComponent = ({
@@ -54,23 +57,30 @@ export const InviteComponent = ({
   status,
   situationID,
   inviteTime,
-  invite
+  invite,
+  isJoinRequest
 
 }) => {
   let sourceClass = createVectorCSSClass(vector);
   let timeCreatedHumanReadable = NOTIFY_API.returnDate(inviteTime);
   let elapsedTimeHumanReadable = NOTIFY_API.getDateTimeSince(new Date(moment.unix(inviteTime)))
-  console.log('date since', );
+
+  
+
+
   return (
     <Card   color="warning">
-    <CardImg className="top" width="100%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
+    <CardImg className="top" width="110%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
     <CardBody>
-      <CardTitle>{inviteSubject}</CardTitle>
+      <CardTitle width="140">{inviteSubject.slice(1, inviteSubject.length -1)}</CardTitle>
       <CardSubtitle className={`${sourceClass}`}>Source: {vector}</CardSubtitle>
-      <CardText> Created On: {timeCreatedHumanReadable}
+      <CardText> {`Created On: \n ${timeCreatedHumanReadable}`}
 
     </CardText>
-    <UCDropdown elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL}></UCDropdown>
+    {isJoinRequest? <span><Button href={inviteURL}>Join Now</Button></span> : null}
+    <UCDropdown elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL}>
+
+    </UCDropdown>
 
 
 

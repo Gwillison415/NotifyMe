@@ -4,11 +4,11 @@ import {bindActionCreators} from 'redux'
 import logo from './static/logo.svg';
 import redux_logo from './static/redux_logo.svg';
 import './App.css';
-import {getInvites, toggle} from './actions'
+import {getInvites, toggleSelected} from './actions'
 import {Container, Button, Media, Row, Col} from 'reactstrap';
 import { Card, CardImg, CardTitle, CardText, CardDeck,
  CardSubtitle, CardBody } from 'reactstrap';
-import Transition from 'react-transition-group/Transition';
+// import Transition from 'react-transition-group/Transition';
 import InvitesComponent from './components/invites';
 import Situation from './components/situationCard';
 import NavToolBar from './components/navbar';
@@ -25,16 +25,8 @@ class App extends Component {
     <NavToolBar></NavToolBar>
     <Container>
       <CardDeck>
-      <Card body inverse color="warning">
-        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180" alt="Card image cap" />
-        <CardBody>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText>
-          <Button>Button</Button>
-        </CardBody>
-      </Card>
-      <InvitesComponent toggle={toggle} invites={this.props.invites}></InvitesComponent>
+      
+      <InvitesComponent invites={this.props.invites}></InvitesComponent>
       <Card>
         <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180" alt="Card image cap" />
         <CardBody>
@@ -56,8 +48,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({invites: state.invites})
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getInvites,
-  toggle
+  getInvites
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

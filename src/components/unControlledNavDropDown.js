@@ -10,11 +10,11 @@ export const UCDropdown = ({
 
     return (
 
-        <UncontrolledDropdown size="lg">
+        <UncontrolledDropdown size="small">
           <DropdownToggle caret id="branchInput">
             More Info
           </DropdownToggle>
-          <DropdownMenu left>
+          <DropdownMenu >
             <DropdownItem> Time Open:</DropdownItem>
             <DropdownItem>{elapsedTimeHumanReadable}</DropdownItem>
             <DropdownItem divider/>
