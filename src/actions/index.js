@@ -27,13 +27,14 @@ such that there is less disruption / bugs / thinking as you move between environ
     //TODO expand to react to each mockJson, mockJsonUpdate
     // for fun, because this framework will 'react' to new data
     return(dispatch) => {
+      dispatch({type: INVITES_REQUEST_STARTED, response: mockJson})
       dispatch({type: INVITES_REQUEST_SUCCESS, invites: mockJson.invites})
     }
   }
 }
-export const TOGGLE_BUTTON = 'TOGGLE_BUTTON'
+export const TOGGLE_JOIN = 'TOGGLE_JOIN'
 export const toggle = () => {
   return async (dispatch) => {
-    dispatch({type: TOGGLE_BUTTON, invites: mockJson.invites})
+    dispatch({type: TOGGLE_JOIN, response: mockJson.invites})
   }
 }

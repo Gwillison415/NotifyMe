@@ -1,41 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-export class UCDropdown extends React.Component {
-    componentWillMount() {
+export const UCDropdown = ({
+    inviteURL,
+    elapsedTimeHumanReadable,
+}) => {
 
-    }
-  render() {
     return (
 
-        <UncontrolledDropdown>
+        <UncontrolledDropdown size="small">
           <DropdownToggle caret id="branchInput">
-            Dropdown test
+            More Info
           </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem>Option 1</DropdownItem>
-            <DropdownItem>Option 2</DropdownItem>
-            <DropdownItem>Option 3</DropdownItem>
+          <DropdownMenu >
+            <DropdownItem> Time since invitation:</DropdownItem>
+            <DropdownItem>{elapsedTimeHumanReadable}</DropdownItem>
+            <DropdownItem divider/>
+            <DropdownItem > <a href={inviteURL}>Message Link</a></DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
 
     );
-  }
+
 }
 
 
-const mapStateToProps = state => ({
 
-  invites: state.invites.invites,
-})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
 }, dispatch)
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(UCDropdown);
