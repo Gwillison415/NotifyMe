@@ -17,27 +17,41 @@ import injectState from '../utils/utils';
 export const InvitesComponent = ({invites, toggleBool}) => {
   let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
   let joinRequest = new RegExp(/\bjoin Situation\b/)
+  let filterDupesObj = {};
+
   const invitations = invites.invites.map((invite, idx) => {
-    var subject = invite.invite.match(/\[[^\]]+\]/, 'g')
+
+    if (!filterDupesObj[invite.sig_id]) {
+      filterDupesObj[invite.sig_id] = 0
+    }
+    let subject = invite.invite.match(/\[[^\]]+\]/, 'g')
     let url = invite.invite.match(urlRegex, 'mg')
     let isJoinRequest = joinRequest.test(invite.invite)
 
-    return (<Card key={idx}>
-      <InviteComponent
-         inviteKey={idx}
-          sender={invite.sender_id}
-          inviteMsg={invite.invite}
-          inviteSubject={subject[0]}
-           inviteURL={url[0]}
-            vector={invite.vector}
-            status={invite.status}
-            situationID={invite.sig_id}
-           inviteSelected={invite.selected}
-            inviteTime={invite.invite_time}
-            invite={invite}
-            isJoinRequest={isJoinRequest}
-          />
-    </Card>)
+    filterDupesObj[invite.sig_id]++
+    if (filterDupesObj[invite.sig_id] > 1) {
+      return;
+
+    } else {
+
+      return (<Card key={idx}>
+        <InviteComponent
+           inviteKey={idx}
+            sender={invite.sender_id}
+            inviteMsg={invite.invite}
+            inviteSubject={subject[0]}
+             inviteURL={url[0]}
+              vector={invite.vector}
+              status={invite.status}
+              situationID={invite.sig_id}
+             inviteSelected={invite.selected}
+              inviteTime={invite.invite_time}
+              invite={invite}
+              isJoinRequest={isJoinRequest}
+            />
+      </Card>)
+    }
+
   })
 
 

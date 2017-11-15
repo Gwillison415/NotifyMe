@@ -24,7 +24,6 @@ export default class NOTIFY_API {
       var now = new Date(), yd, md, dd, hd, nd, sd, out = [];
 
       yd = now.getFullYear()-target.getFullYear();
-      console.log(now.getFullYear(), target.getFullYear());
       md = now.getMonth()-target.getMonth();
       dd = now.getDate()-target.getDate();
       hd = now.getHours()-target.getHours();
