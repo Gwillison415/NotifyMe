@@ -15,10 +15,10 @@ export const UCDropdown = ({
             More Info
           </DropdownToggle>
           <DropdownMenu >
-            <DropdownItem> Time Open:</DropdownItem>
+            <DropdownItem> Time since invitation:</DropdownItem>
             <DropdownItem>{elapsedTimeHumanReadable}</DropdownItem>
             <DropdownItem divider/>
-            <DropdownItem > <a href={inviteURL}>{inviteURL}</a></DropdownItem>
+            <DropdownItem > <a href={inviteURL}>Message Link</a></DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
 

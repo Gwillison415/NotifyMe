@@ -46,7 +46,15 @@ const checkMessage = (string) => {
     return string;
   }
 }
+const statusBackground = (parameter) => {
+  switch (parameter) {
+    case "read":
 
+      break;
+    default:
+
+  }
+}
 export const InviteComponent = ({
   sender,
   inviteKey,
@@ -64,12 +72,12 @@ export const InviteComponent = ({
   let sourceClass = createVectorCSSClass(vector);
   let timeCreatedHumanReadable = NOTIFY_API.returnDate(inviteTime);
   let elapsedTimeHumanReadable = NOTIFY_API.getDateTimeSince(new Date(moment.unix(inviteTime)))
+  let statusColor = status === "read"? "secondary" : "danger"
 
-  
 
 
   return (
-    <Card   color="warning">
+    <Card   color={statusColor}>
     <CardImg className="top" width="110%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
     <CardBody>
       <CardTitle width="140">{inviteSubject.slice(1, inviteSubject.length -1)}</CardTitle>
@@ -77,7 +85,10 @@ export const InviteComponent = ({
       <CardText> {`Created On: \n ${timeCreatedHumanReadable}`}
 
     </CardText>
-    {isJoinRequest? <span><Button href={inviteURL}>Join Now</Button></span> : null}
+    {isJoinRequest?
+      <span>
+      <Button href={inviteURL} color="primary">Join Now</Button>
+      </span> : null}
     <UCDropdown elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL}>
 
     </UCDropdown>
@@ -87,17 +98,14 @@ export const InviteComponent = ({
     </CardBody>
   </Card>)
 }
-//
-// export const mapStateToProps = (state, ownProps) => {
-//   const isOpen = state.invites.isOpen;
-//
-//   return {
-//     isOpen,
-//   }
-// }
-// const mapDispatchToProps = dispatch => bindActionCreators({
-//   toggle,
-//
-// }, dispatch)
-// export default connect(mapStateToProps)(InviteComponent);
-export default InviteComponent;
+
+export const mapStateToProps = (state, ownProps) => {
+  const isOpen = state.invites.isOpen;
+
+  return {
+    isOpen,
+  }
+}
+
+export default connect(mapStateToProps, null)(InviteComponent);
+// export default InviteComponent;
