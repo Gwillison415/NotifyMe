@@ -37,15 +37,12 @@ export const createVectorCSSClass = (source) => {
       return "fa fa-chain-broken"
   }
 }
+const cleanMessage = (string) => {
+  if (typeof string !== "string") {
+    throw ("You have corrupt data, What are the backend folks doing around here anyway?")
+  }
 
-// export const  findTimeElapsed = (timestamp) => {
-//   let now = parseInt(Date.now() / 1000)
-//   let elapsedUnixTime =  now - timestamp
-//   let offset =new Date(elapsedUnixTime)
-//   let m1 = moment(now)
-//   let m2 = moment(new Date(timestamp))
-//   console.log('starttime', NOTIFY_API.returnDate(timestamp), NOTIFY_API.returnDate(now),  m1.diff(m2, "years", true));
-// }
+}
 
 export const InviteComponent = ({
   sender,
@@ -57,26 +54,23 @@ export const InviteComponent = ({
   status,
   situationID,
   inviteTime,
-  toggle,
-  isOpen,
   invite
 
 }) => {
   let sourceClass = createVectorCSSClass(vector);
-  let timeCreated = NOTIFY_API.returnDate(inviteTime);
-  function toggleSelect(property) {
-    return !property
-  }
-  console.log('date since', NOTIFY_API.getDateTimeSince(new Date(moment.unix(inviteTime))));
+  let timeCreatedHumanReadable = NOTIFY_API.returnDate(inviteTime);
+  let elapsedTimeHumanReadable = NOTIFY_API.getDateTimeSince(new Date(moment.unix(inviteTime)))
+  console.log('date since', );
   return (
-    <Card  inverse="inverse" color="warning">
-    <CardImg top="top" width="100%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
+    <Card   color="warning">
+    <CardImg className="top" width="100%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
     <CardBody>
       <CardTitle>{inviteSubject}</CardTitle>
       <CardSubtitle className={`${sourceClass}`}>Source: {vector}</CardSubtitle>
-      <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-      <UCDropdown></UCDropdown>
+      <CardText> Created On: {timeCreatedHumanReadable}
+
     </CardText>
+    <UCDropdown elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL}></UCDropdown>
 
 
 

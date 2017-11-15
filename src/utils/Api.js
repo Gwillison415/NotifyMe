@@ -40,12 +40,12 @@ export default class NOTIFY_API {
       if( nd < 0) {hd--; nd += 60;}
       if( sd < 0) {nd--; sd += 60;}
 
-      if( yd > 0) out.push( yd+" yr"+(yd == 1 ? "" : "'s"));
-      if( md > 0) out.push( md+" mo"+(md == 1 ? "" : "'s"));
+      if( yd > 0) out.push( yd+" Y"+(yd == 1 ? "" : "'s"));
+      if( md > 0) out.push( md+" MO"+(md == 1 ? "" : "'s"));
       if( dd > 0) out.push( dd+" day"+(dd == 1 ? "" : "s"));
-      if( hd > 0) out.push( hd+" hour"+(hd == 1 ? "" : "s"));
-      if( nd > 0) out.push( nd+" minute"+(nd == 1 ? "" : "s"));
-      if( sd > 0) out.push( sd+" second"+(sd == 1 ? "" : "s"));
+      if( hd > 0) out.push( hd+"H"+(hd == 1 ? "" : "s"));
+      if( nd > 0) out.push( nd+"M"+(nd == 1 ? "" : "s"));
+      if( sd > 0) out.push( sd+"S"+(sd == 1 ? "" : "s"));
       return out.join(" ");
 
       function getDaysInMonth(month,year) {

@@ -16,12 +16,14 @@ import injectState from '../utils/utils';
 
 export const InvitesComponent = ({invites, toggleBool}) => {
   let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
-
+  let joinRequest = new RegExp(/\bjoin Situation\b/)
   const invitations = invites.invites.map((invite, idx) => {
     var subject = invite.invite.match(/\[[^\]]+\]/, 'g')
     let url = invite.invite.match(urlRegex, 'mg')
-    return (<Card>
-      <InviteComponent key={idx}
+    let isJoinRequest = joinRequest.test(invite.invite)
+
+    return (<Card key={idx}>
+      <InviteComponent
          inviteKey={idx}
           sender={invite.sender_id}
           inviteMsg={invite.invite}
@@ -30,22 +32,20 @@ export const InvitesComponent = ({invites, toggleBool}) => {
             vector={invite.vector}
             status={invite.status}
             situationID={invite.sig_id}
-             inviteSelected={invite.selected}
-              inviteTime={invite.invite_time}
-              toggle={toggle}
-            invite={invite}/>
-            {/* <UCDropdown></UCDropdown> */}
+           inviteSelected={invite.selected}
+            inviteTime={invite.invite_time}
+            invite={invite}
+            isJoinRequest={isJoinRequest}
+          />
     </Card>)
   })
 
-  // let messageDetailsObject = createMessageDetailsObject(invite.invite)
+
   return (<div className="col">
     {invitations}
   </div>)
 }
-//
-// inviteSubject={messageDetailsObject.subject[0]}
-// inviteURL={messageDetailsObject.url[0]}
+
 export const mapStateToProps = (state, ownProps) => {
   const subject = ownProps.subject;
 
