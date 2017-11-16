@@ -1,4 +1,4 @@
-import {invitationsJson as mockJson} from '../static/assets/invitations';
+import {invitationsJson as mockJson} from '../static/invitations';
 // import {invitationsUpdateJson as mockJsonUpdate} from '../static/invitations_update';
 
 //Strings are prefered to symbols and promises because serializable actions enable several
@@ -15,19 +15,20 @@ export const getInvites = () => {
 
   /* if statement utilizing NODE_ENV environmental variable acts as a toggle between environments
 such that there is less disruption / bugs / thinking as you move between environments (Dev, test, production) */
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "REALproduction") {
     return async (dispatch, getState, {NOTIFY_API}) => {
       dispatch({type: INVITES_REQUEST_STARTED})
       const response = await NOTIFY_API.request(`/moogsoftAPI/invites`)
       const json = await response.json()
-      dispatch({type: INVITES_REQUEST_SUCCESS, invites: json.invites})
+      dispatch({type: INVITES_REQUEST_SUCCESS, invites: json})
     }
   } else {
     //exersize calls for mock data (provided)
     //TODO expand to react to each mockJson, mockJsonUpdate
     // for fun, because this framework will 'react' to new data
+    console.log('inside dev-side reducer');
     return(dispatch) => {
-      dispatch({type: INVITES_REQUEST_STARTED, response: mockJson})
+      // dispatch({type: INVITES_REQUEST_STARTED, response: mockJson.invites})
       dispatch({type: INVITES_REQUEST_SUCCESS, invites: mockJson.invites})
     }
   }

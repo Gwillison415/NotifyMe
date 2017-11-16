@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
 
   switch (action.type) {
     case INVITES_REQUEST_STARTED:
-      return createState(action.response.invites, state);
+      return createState(action.response, state);
     case INVITES_REQUEST_SUCCESS:
       return {
         ...state,
