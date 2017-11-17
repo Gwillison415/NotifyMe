@@ -1,6 +1,7 @@
 import {
   INVITES_REQUEST_STARTED,
   INVITES_REQUEST_SUCCESS,
+  UPDATE_JSON,
   TOGGLE_JOIN,
 } from '../actions'
 
@@ -56,6 +57,8 @@ export default (state = initialState, action) => {
       ...state,
       invites: toggleProperty(state.invites, action.invite, "someprop")
     }
+    case UPDATE_JSON:
+      return createState(action.response.invites, state);
     default:
       return state
   }

@@ -31,11 +31,20 @@ such that there is less disruption / bugs / thinking as you move between environ
     return async (dispatch) => {
       let mockJsonCall = await mockJson;
       dispatch({type: INVITES_REQUEST_STARTED, response: mockJsonCall})
-      
+
       dispatch({type: INVITES_REQUEST_SUCCESS})
     }
   // }
 }
+
+
+export const UPDATE_JSON = 'UPDATE_JSON'
+export const handleUpdates = () => {
+  return async (dispatch) => {
+    dispatch({type: UPDATE_JSON, response: mockJsonUpdate})
+  }
+}
+
 export const TOGGLE_JOIN = 'TOGGLE_JOIN'
 export const toggle = () => {
   return async (dispatch) => {

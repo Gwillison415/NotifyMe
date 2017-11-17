@@ -5,6 +5,9 @@ import {InviteComponent} from './invite';
 import {
   Card,
   CardDeck,
+  Container,
+  Col,
+  Row
 } from 'reactstrap';
 
 
@@ -48,17 +51,33 @@ export const InvitesComponent = ({invites, toggleBool}) => {
     }
   })
 
-  return (<CardDeck>
-    <div className="col">
-      <h2>Unread Messages</h2>
-      {invitations[1]}
-    </div>
-    <div className="col">
-      <h2>Read Messages</h2>
-      {invitations[0]}
-    </div>
-  </CardDeck>)
+  return (
+    <Container>
+      <CardDeck width="100%">
+        <Row>
+          <Col  sm="6" xs={{ size: 12,  pull: 1} }>
+            <h2>Unread Messages</h2>
+              {invitations[1]}
+          </Col>
+          <Col sm="6" xs={{ size: 12,  pull: 1}  }>
+            <h2>Read Messages</h2>
+            {invitations[0]}
+          </Col>
+        </Row>
+      </CardDeck>
+    </Container>
+  )
 }
+//
+// <div className="col">
+//   <h2>Unread Messages</h2>
+//   {invitations[1]}
+// </div>
+// <div className="col">
+//   <h2>Read Messages</h2>
+//   {invitations[0]}
+// </div>
 
-
+{/* {invitations[1]}
+{invitations[0]} */}
 export default InvitesComponent

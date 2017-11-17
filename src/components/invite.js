@@ -68,9 +68,9 @@ export const InviteComponent = ({
     </CardText>
     {isJoinRequest?
       <span>
-      <Button href={inviteURL} color="primary">Join Now</Button>
+      <Button href={inviteURL} color="primary">{status.toUpperCase()} Join Now</Button>
       </span> : null}
-    <UCDropdown elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL}>
+    <UCDropdown size="auto" elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL} color="success">
 
     </UCDropdown>
 

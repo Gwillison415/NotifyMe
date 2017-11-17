@@ -19,26 +19,25 @@ class App extends Component {
   }
   render() {
     return (
-      <Container>
+        <Container>
+          <div className="App">
+          <header className="App-header">
+            <h1 className="App-title">Built With React & Redux</h1>
+            <span>
+              <img src={logo} className="App-logo" alt="logo" />
+
+              <img src={redux_logo} className="App-logo" alt="redux Logo"/>
+            </span>
+          </header>
+
+        </div>
     <NavToolBar></NavToolBar>
-    <Container>
+
 
 
       <InvitesComponent invites={this.props.invites}></InvitesComponent>
 
 
-    </Container>
-    <div className="App">
-    <header className="App-header">
-      <h1 className="App-title">Built With React & Redux</h1>
-      <span>
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <img src={redux_logo} className="App-logo" alt="redux Logo"/>
-      </span>
-    </header>
-
-  </div>
 
   </Container>
 

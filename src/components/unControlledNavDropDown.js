@@ -10,7 +10,7 @@ export const UCDropdown = ({
 
     return (
 
-        <UncontrolledDropdown size="small">
+        <UncontrolledDropdown size="auto" sm={{push:5, offset: 4}}color="success">
           <DropdownToggle caret id="branchInput">
             More Info
           </DropdownToggle>
