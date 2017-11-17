@@ -5,8 +5,9 @@ import {
 } from '../actions'
 
 const initialState = {
+  ids: [],
   invites: [],
-  invitesById: {},
+  // invitesById: {},
   fetchingInvites: true,
 
 }
@@ -14,21 +15,28 @@ function createState(json, incomingState) {
   const state = incomingState;
   state.invitesById = {};
   json.forEach((invite, idx) => {
-    if (state.invitesById[invite.invite_id] !== "null") {
+    //maintain backwards compatibility with previos state setup
+    state.invites.push(invite)
+  // console.log(state.invitesById[invite.invite_id]);
+    // dedupe invites
+    if (state.invitesById.hasOwnProperty(invite.sig_id)) {
+      console.log('inside dedupe');
       return;
     } else {
 
+    console.log('json ', invite.invite_id);
       state.ids = state.ids.concat(invite.invite_id);
-      state.invitesById[invite.invite_id] = {};
-      state.invitesById[invite.invite_id].invite = invite.invite;
-      state.invitesById[invite.invite_id].sender_id = invite.sender_id;
-      state.invitesById[invite.invite_id].vector = invite.vector;
-      state.invitesById[invite.invite_id].sig_id = invite.sig_id;
-      state.invitesById[invite.invite_id].percentComplete = 0;
+      state.invitesById[invite.sig_id] = {};
+      state.invitesById[invite.sig_id].invite = invite.invite;
+      state.invitesById[invite.sig_id].sender_id = invite.sender_id;
+      state.invitesById[invite.sig_id].vector = invite.vector;
+      state.invitesById[invite.sig_id].sig_id = invite.sig_id;
+      state.invitesById[invite.sig_id].percentComplete = 0;
+      console.log(state.invitesById[invite.sig_id]);
     }
 
   });
-  return { ...state, fetchingInvites: false };
+  return { ...state };
 }
 
 
@@ -36,12 +44,12 @@ export default (state = initialState, action) => {
 
   switch (action.type) {
     case INVITES_REQUEST_STARTED:
-      return createState(action.response, state);
+      return createState(action.response.invites, state);
     case INVITES_REQUEST_SUCCESS:
       return {
         ...state,
         fetchingInvites: false,
-        invites: action.invites,
+        // invites: action.invites,
       }
     case TOGGLE_JOIN:
     return {

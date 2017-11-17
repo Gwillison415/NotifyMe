@@ -1,4 +1,4 @@
-const invitationsUpdateJson = {
+export const invitationsUpdateJson = {
     "invites": [{
         "invite_id": 1,
         "sender_id": "jeff",
@@ -41,4 +41,3 @@ const invitationsUpdateJson = {
         "status": "read"
     }]
 }
-export default invitationsUpdateJson;
