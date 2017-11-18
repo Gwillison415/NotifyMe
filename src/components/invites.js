@@ -21,17 +21,7 @@ export const InvitesComponent = ({invites}) => {
   // console.log('state in Component', this.props);
   let invitations = [ [], [] ]
   invites.forEach((invite, idx) => {
-    // if (invite.status === "unread") {
-    //   statsObj["unread"]++;
-    // } else {
-    //   statsObj["read"]++;
-    // }
-    // if (!filterDupesObj[invite.sig_id]) {
-    //   filterDupesObj[invite.sig_id] = 0
-    // }
-    //
-
-    // filterDupesObj[invite.sig_id]++
+  
 
       if (invite.status === "read") {
         invitations[0].push(<Card key={idx}>

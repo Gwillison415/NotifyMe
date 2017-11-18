@@ -11,8 +11,6 @@ import InvitesComponent from './components/invites';
 
 import NavToolBar from './components/navbar';
 
-
-
 class App extends Component {
   // shouldComponentUpdate(nextProps, nextState) {
   //   console.log('that happened');
@@ -22,34 +20,39 @@ class App extends Component {
     this.props.getInvites()
   }
   render() {
-    return (
-        <Container>
-          <div className="App">
-          <header className="App-header">
-            <h1 className="App-title">Built With React & Redux</h1>
-            <span>
-              <img src={logo} className="App-logo" alt="logo" />
+    return (<Container>
+      <div className="App">
+        <header className="App-header">
+          <h1 className="App-title">Built With React & Redux</h1>
+          <span>
+            <img src={logo} className="App-logo" alt="logo"/>
 
-              <img src={redux_logo} className="App-logo" alt="redux Logo"/>
-            </span>
-          </header>
+            <img src={redux_logo} className="App-logo" alt="redux Logo"/>
+          </span>
+        </header>
 
-        </div>
-    <NavToolBar></NavToolBar>
+      </div>
+      <NavToolBar statesObj={this.props.invites.statsObj} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read}     duplicates={this.props.duplicates}   >
 
-
+      {/* percentComplete={this.props.statsObj.percentComplete} */}
+      </NavToolBar>
 
       <InvitesComponent invites={this.props.invites}></InvitesComponent>
 
-
-
-  </Container>
-
-  );
+    </Container>);
   }
 }
 
-const mapStateToProps = state => ({invites: state.invites})
+const mapStateToProps = state => {
+  const invites = state.invites
+  const duplicates = state.invites.statsObj.duplicates
+  const percentComplete = state.invites.statsObj.percentComplete
+  return ({
+    invites,
+    duplicates,
+    percentComplete,
+  })
+}
 const mapDispatchToProps = dispatch => bindActionCreators({
   getInvites
 }, dispatch)
