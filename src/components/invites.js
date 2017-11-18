@@ -17,7 +17,7 @@ import {
 //     // this.props.invites
 //   }
 // }
-export const InvitesComponent = ({invites, toggleBool}) => {
+export const InvitesComponent = ({invites}) => {
   // console.log('state in Component', this.props);
   let invitations = [ [], [] ]
   invites.forEach((invite, idx) => {
@@ -35,11 +35,11 @@ export const InvitesComponent = ({invites, toggleBool}) => {
 
       if (invite.status === "read") {
         invitations[0].push(<Card key={idx}>
-          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} inviteMsg={invite.invite}  vector={invite.vector} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} />
+          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} inviteMsg={invite.invite}  vector={invite.vector} subject={invite.subject} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} />
         </Card>)
       } else {
         invitations[1].push(<Card key={idx}>
-          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} inviteMsg={invite.invite}  vector={invite.vector} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} />
+          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} subject={invite.subject} inviteMsg={invite.invite}  vector={invite.vector} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} />
         </Card>)
       };
 

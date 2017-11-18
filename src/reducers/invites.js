@@ -8,7 +8,7 @@ import {
 const initialState = {
   ids: [],
   invites: [],
-  // invitesById: {},
+  invitesById: {},
   fetchingInvites: true,
 
 }
@@ -20,26 +20,51 @@ let statsObj = {
   unread: 0,
 };
 
-function createState(json, incomingState, prevState = null ) {
-  console.log(initialState, prevState);
+function createState(json, incomingState, isUpdate = false ) {
+
+
   const state = incomingState
-  console.log("incoming!",incomingState);
 
 
 
-    state.invitesById = {};
-  // state.invitesById = {};
-  json.forEach((invite, idx) => {
+    let count = 0
+
+  json.forEach((invite) => {
+    //parse the invite message for truly relevant info given limited 'real estate'
     let subject = invite.invite.match(/\[[^\]]+\]/, 'g')
+    //pull string out of RegExp OBJ
+    // subject = subject[0].slice(1, subject[0].length - 1)
     let url = invite.invite.match(urlRegex, 'mg')
+
+    //bool to indicate when to put up a 'join' button
     let isJoinRequest = joinRequest.test(invite.invite)
-    //maintain backwards compatibility with previos state setup
-  // console.log(state.invitesById[invite.invite_id]);
-    // dedupe invites
+
     if (state.invitesById.hasOwnProperty(invite.sig_id)) {
-      console.log('inside dedupe');
-      return;
+
+      if (state.invitesById[invite.sig_id].subject === subject[0].slice(1, subject[0].length - 1)) {
+        console.log('duplicate entry not added');
+        return;
+      } else {
+        // write new entry into state tree
+        state.invites.push(Object.assign(invite, {subject: subject[0].slice(1, subject[0].length - 1), url: url[0], isJoinRequest}))
+
+        state.ids = state.ids.concat(invite.invite_id);
+        state.invitesById[invite.sig_id] = {};
+        state.invitesById[invite.sig_id].invite = invite.invite;
+        state.invitesById[invite.sig_id].sender_id = invite.sender_id;
+        state.invitesById[invite.sig_id].subject = invite.subject;
+        state.invitesById[invite.sig_id].url = invite.url;
+        state.invitesById[invite.sig_id].invite_id = invite.invite_id;
+        state.invitesById[invite.sig_id].isJoinRequest = invite.isJoinRequest;
+        state.invitesById[invite.sig_id].status = invite.status;
+        state.invitesById[invite.sig_id].vector = invite.vector;
+        state.invitesById[invite.sig_id].sig_id = invite.sig_id;
+        state.invitesById[invite.sig_id].percentComplete = 0;
+      }
+
+
     } else {
+      // If there isn't an entry, write entry into state tree
       state.invites.push(Object.assign(invite, {subject: subject[0].slice(1, subject[0].length - 1), url: url[0], isJoinRequest}))
 
       state.ids = state.ids.concat(invite.invite_id);
@@ -54,7 +79,6 @@ function createState(json, incomingState, prevState = null ) {
       state.invitesById[invite.sig_id].vector = invite.vector;
       state.invitesById[invite.sig_id].sig_id = invite.sig_id;
       state.invitesById[invite.sig_id].percentComplete = 0;
-      // console.log(state.invitesById[invite.sig_id]);
     }
 
   });
@@ -79,7 +103,7 @@ export default (state = initialState, action) => {
       invites: toggleProperty(state.invites, action.invite, "someprop")
     }
     case UPDATE_JSON:
-      return createState(action.response.invites, state, action.prevState);
+      return createState(action.response.invites, state, action.isUpdate);
     default:
       return state
   }

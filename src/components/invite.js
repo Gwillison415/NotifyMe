@@ -47,6 +47,7 @@ export const InviteComponent = ({
   status,
   situationID,
   inviteTime,
+  subject,
   invite,
   isJoinRequest,
   sig_id
@@ -58,12 +59,11 @@ export const InviteComponent = ({
   let statusColor = status === "read"? "secondary" : "danger"
 
 
-
   return (
     <Card   color={statusColor}>
     <CardImg className="top" width="110%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
     <CardBody>
-      <CardTitle width="140">{inviteSubject}</CardTitle>
+      <CardTitle width="140">{subject}</CardTitle>
       <CardSubtitle className={`${sourceClass}`}>Source: {vector} sig_id:{sig_id}</CardSubtitle>
       <CardText> {`Created On: \n ${timeCreatedHumanReadable}`}
 
@@ -84,12 +84,12 @@ export const InviteComponent = ({
 
 export const mapStateToProps = (state, ownProps) => {
   const id = ownProps.inviteID;
-  const inviteSubject = state.invites.invitesById[id].subject
+  const subject = state.invites.invitesById[id].subject
   const sender = state.invites.invitesById[id].sender_id;
 
 
   return {
-    inviteSubject,
+    subject,
     sender,
 
   };
