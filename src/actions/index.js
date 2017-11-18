@@ -1,4 +1,4 @@
-import {invitationsJson as mockJson} from '../invitations';
+import {invitationsJson as mockJson} from '../static/invitations';
  import {invitationsUpdateJson as mockJsonUpdate} from '../static/invitationsUpdate';
 
 //Strings are prefered to symbols and promises because serializable actions enable several
@@ -38,16 +38,24 @@ such that there is less disruption / bugs / thinking as you move between environ
 }
 
 
-export const UPDATE_JSON = 'UPDATE_JSON'
+export const UPDATE_JSON = "UPDATE_JSON"
 export const handleUpdates = () => {
   return async (dispatch) => {
-    dispatch({type: UPDATE_JSON, response: mockJsonUpdate})
+    let mockJsonCall = await mockJsonUpdate;
+    dispatch({type: UPDATE_JSON, response: mockJsonCall})
   }
 }
 
-export const TOGGLE_JOIN = 'TOGGLE_JOIN'
+export const TOGGLE_JOIN = "TOGGLE_JOIN"
 export const toggle = () => {
   return async (dispatch) => {
     dispatch({type: TOGGLE_JOIN, response: mockJson.invites})
+  }
+}
+
+export const UPDATE_INVITES = "UPDATE_INVITES"
+export const updateInvites = () => {
+  return async (dipatch) => {
+    ({type: UPDATE_INVITES})  
   }
 }

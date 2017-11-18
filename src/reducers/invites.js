@@ -3,6 +3,7 @@ import {
   INVITES_REQUEST_SUCCESS,
   UPDATE_JSON,
   TOGGLE_JOIN,
+  UPDATE_INVITES
 } from '../actions'
 
 const initialState = {
@@ -17,27 +18,26 @@ function createState(json, incomingState) {
   state.invitesById = {};
   json.forEach((invite, idx) => {
     //maintain backwards compatibility with previos state setup
-    state.invites.push(invite)
   // console.log(state.invitesById[invite.invite_id]);
     // dedupe invites
     if (state.invitesById.hasOwnProperty(invite.sig_id)) {
       console.log('inside dedupe');
       return;
     } else {
-
-    console.log('json ', invite.invite_id);
-      state.ids = state.ids.concat(invite.invite_id);
+      state.invites.push(invite)
+      console.log('first apss', state.ids);
+      state.ids = state.ids.concat(invite.sig_id);
       state.invitesById[invite.sig_id] = {};
       state.invitesById[invite.sig_id].invite = invite.invite;
       state.invitesById[invite.sig_id].sender_id = invite.sender_id;
       state.invitesById[invite.sig_id].vector = invite.vector;
       state.invitesById[invite.sig_id].sig_id = invite.sig_id;
       state.invitesById[invite.sig_id].percentComplete = 0;
-      console.log(state.invitesById[invite.sig_id]);
+      console.log(state.invitesById[invite.sig_id], state.ids);
     }
 
   });
-  return { ...state };
+  return { ...state, fetchingInvites: false };
 }
 
 
@@ -57,7 +57,20 @@ export default (state = initialState, action) => {
       ...state,
       invites: toggleProperty(state.invites, action.invite, "someprop")
     }
+    case UPDATE_INVITES:
+      return {
+        ...state,
+
+      }
     case UPDATE_JSON:
+      return {
+        ...state,
+        invites: action.response.invites.filter(invite => {
+          if (!state.invitesById[invite.sig_id]) {
+            return invite
+          }
+        })
+      }
       return createState(action.response.invites, state);
     default:
       return state
