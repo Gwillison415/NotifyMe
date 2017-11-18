@@ -1,5 +1,6 @@
 import React from 'react'
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {UCDropdown} from './unControlledNavDropDown';
 
 import {
@@ -47,7 +48,8 @@ export const InviteComponent = ({
   situationID,
   inviteTime,
   invite,
-  isJoinRequest
+  isJoinRequest,
+  sig_id
 
 }) => {
   let sourceClass = createVectorCSSClass(vector);
@@ -61,8 +63,8 @@ export const InviteComponent = ({
     <Card   color={statusColor}>
     <CardImg className="top" width="110%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
     <CardBody>
-      <CardTitle width="140">{inviteSubject.slice(1, inviteSubject.length -1)}</CardTitle>
-      <CardSubtitle className={`${sourceClass}`}>Source: {vector}</CardSubtitle>
+      <CardTitle width="140">{inviteSubject}</CardTitle>
+      <CardSubtitle className={`${sourceClass}`}>Source: {vector} sig_id:{sig_id}</CardSubtitle>
       <CardText> {`Created On: \n ${timeCreatedHumanReadable}`}
 
     </CardText>
@@ -80,4 +82,22 @@ export const InviteComponent = ({
   </Card>)
 }
 
-export default InviteComponent;
+export const mapStateToProps = (state, ownProps) => {
+  const id = ownProps.inviteID;
+  const inviteSubject = state.invites.invitesById[id].subject
+  const sender = state.invites.invitesById[id].sender_id;
+
+
+  return {
+    inviteSubject,
+    sender,
+
+  };
+};
+
+// const mapDispatchToProps = dispatch => bindActionCreators({
+//   handleUpdates
+// }, dispatch)
+
+export default connect(mapStateToProps, null)(InviteComponent);
+// export default InviteComponent;

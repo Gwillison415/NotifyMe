@@ -39,9 +39,9 @@ such that there is less disruption / bugs / thinking as you move between environ
 
 
 export const UPDATE_JSON = 'UPDATE_JSON'
-export const handleUpdates = () => {
+export const handleUpdates = (prevState) => {
   return async (dispatch) => {
-    dispatch({type: UPDATE_JSON, response: mockJsonUpdate})
+    dispatch({type: UPDATE_JSON, response: mockJsonUpdate, prevState: prevState})
   }
 }
 

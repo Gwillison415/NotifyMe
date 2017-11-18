@@ -1,5 +1,6 @@
 import React from 'react'
 import {InviteComponent} from './invite';
+import {connect} from 'react-redux'
 
 
 import {
@@ -11,73 +12,79 @@ import {
 } from 'reactstrap';
 
 
+// class InvitesComponent extends Component {
+//   constructor() {
+//     // this.props.invites
+//   }
+// }
 export const InvitesComponent = ({invites, toggleBool}) => {
-  let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
-  let joinRequest = new RegExp(/\bjoin Situation\b/)
-  let filterDupesObj = {};
-  let statsObj = {
-    read: 0,
-    unread: 0,
-  };
-  const invitations = [ [], [] ];
+  // console.log('state in Component', this.props);
+  let invitations = [ [], [] ]
+  invites.forEach((invite, idx) => {
+    // if (invite.status === "unread") {
+    //   statsObj["unread"]++;
+    // } else {
+    //   statsObj["read"]++;
+    // }
+    // if (!filterDupesObj[invite.sig_id]) {
+    //   filterDupesObj[invite.sig_id] = 0
+    // }
+    //
 
-  invites.invites.forEach((invite, idx) => {
-    if (invite.status === "unread") {
-      statsObj["unread"]++;
-    } else {
-      statsObj["read"]++;
-    }
-    if (!filterDupesObj[invite.sig_id]) {
-      filterDupesObj[invite.sig_id] = 0
-    }
-    let subject = invite.invite.match(/\[[^\]]+\]/, 'g')
-    let url = invite.invite.match(urlRegex, 'mg')
-    let isJoinRequest = joinRequest.test(invite.invite)
+    // filterDupesObj[invite.sig_id]++
 
-    filterDupesObj[invite.sig_id]++
-    if (filterDupesObj[invite.sig_id] > 1) {
-      return;
-
-    } else {
       if (invite.status === "read") {
         invitations[0].push(<Card key={idx}>
-          <InviteComponent inviteKey={idx} sender={invite.sender_id} inviteMsg={invite.invite} inviteSubject={subject[0]} inviteURL={url[0]} vector={invite.vector} status={invite.status} situationID={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} isJoinRequest={isJoinRequest}/>
+          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} inviteMsg={invite.invite}  vector={invite.vector} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} />
         </Card>)
       } else {
         invitations[1].push(<Card key={idx}>
-          <InviteComponent inviteKey={idx} sender={invite.sender_id} inviteMsg={invite.invite} inviteSubject={subject[0]} inviteURL={url[0]} vector={invite.vector} status={invite.status} situationID={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} isJoinRequest={isJoinRequest}/>
+          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} inviteMsg={invite.invite}  vector={invite.vector} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} />
         </Card>)
       };
-    }
+
   })
 
-  return (
-    <Container>
-      <CardDeck width="100%">
-        <Row>
-          <Col  sm="6" xs={{ size: 12,  pull: 1} }>
-            <h2>Unread Messages</h2>
-              {invitations[1]}
-          </Col>
-          <Col sm="6" xs={{ size: 12,  pull: 1}  }>
-            <h2>Read Messages</h2>
-            {invitations[0]}
-          </Col>
-        </Row>
-      </CardDeck>
-    </Container>
-  )
-}
-//
-// <div className="col">
-//   <h2>Unread Messages</h2>
-//   {invitations[1]}
-// </div>
-// <div className="col">
-//   <h2>Read Messages</h2>
-//   {invitations[0]}
-// </div>
+// isJoinRequest={isJoinRequest} inviteSubject={subject[0]} inviteURL={url[0]}
 
-{/* {invitations[1]}
-{invitations[0]} */}
-export default InvitesComponent
+    return (
+      <Container>
+        <CardDeck width="100%">
+          <Row>
+            <Col  sm="6" xs={{ size: 12,  pull: 1} }>
+              <h2 >Unread Messages</h2>
+              {invitations[1]}
+            </Col>
+            <Col sm="6" xs={{ size: 12,  pull: 1}  }>
+              <h2>Read Messages</h2>
+              {invitations[0]}
+            </Col>
+          </Row>
+        </CardDeck>
+      </Container>
+    )
+
+}
+
+export const mapStateToProps = (state, ownProps) => {
+
+  const invitesById = state.invites.invitesById;
+  const invites = state.invites.invites
+
+
+  return {
+    invites,
+    invitesById,
+  };
+};
+
+// export const mapDispatchToProps = dispatch =>
+//   bindActionCreators(
+//     {
+//       retrieveMilestones,
+//     },
+//     dispatch,
+//   );
+
+export default connect(mapStateToProps, null)(InvitesComponent);
+// export default InvitesComponent
