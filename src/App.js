@@ -14,6 +14,10 @@ import NavToolBar from './components/navbar';
 
 
 class App extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('that happened');
+    return nextProps.invites !== this.props.invites
+  }
   componentDidMount() {
     this.props.getInvites()
   }

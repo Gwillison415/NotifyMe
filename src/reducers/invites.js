@@ -17,19 +17,19 @@ function createState(json, incomingState) {
   state.invitesById = {};
   json.forEach((invite, idx) => {
     //maintain backwards compatibility with previos state setup
-    state.invites.push(invite)
   // console.log(state.invitesById[invite.invite_id]);
     // dedupe invites
     if (state.invitesById.hasOwnProperty(invite.sig_id)) {
       console.log('inside dedupe');
       return;
     } else {
+      state.invites.push(invite)
 
-    console.log('json ', invite.invite_id);
       state.ids = state.ids.concat(invite.invite_id);
       state.invitesById[invite.sig_id] = {};
       state.invitesById[invite.sig_id].invite = invite.invite;
       state.invitesById[invite.sig_id].sender_id = invite.sender_id;
+      state.invitesById[invite.sig_id].status = invite.status;
       state.invitesById[invite.sig_id].vector = invite.vector;
       state.invitesById[invite.sig_id].sig_id = invite.sig_id;
       state.invitesById[invite.sig_id].percentComplete = 0;

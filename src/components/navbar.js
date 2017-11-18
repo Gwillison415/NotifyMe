@@ -17,8 +17,8 @@ import {handleUpdates} from '../actions';
             </DropdownToggle>
             <DropdownMenu >
               <DropdownItem> Time since invitation:</DropdownItem>
-              <DropdownItem onClick={()=>{this.props.handleUpdates()}}> Trigger Updated invitations</DropdownItem>
-              <DropdownItem divider/>
+              {/* <DropdownItem onClick={()=>{this.props.handleUpdates()}}> Trigger Updated invitations</DropdownItem>
+              <DropdownItem divider/> */}
               <DropdownItem > <a href="https://github.com/Gwillison415/NotifyMe">Github Repo</a></DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
