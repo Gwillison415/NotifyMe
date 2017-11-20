@@ -23,18 +23,18 @@ such that there is less disruption / bugs / thinking as you move between environ
   //     const json = await response.json()
   //     dispatch({type: INVITES_REQUEST_SUCCESS, invites: json})
   //   }
-  // } else {
+
 
     //TODO expand to react to each mockJson, mockJsonUpdate
     // for fun, because this framework will 'react' to new data
-    console.log('inside dev-side reducer');
+
     return async (dispatch) => {
       let mockJsonCall = await mockJson;
       dispatch({type: INVITES_REQUEST_STARTED, response: mockJsonCall})
 
       dispatch({type: INVITES_REQUEST_SUCCESS})
     }
-  // }
+
 }
 
 

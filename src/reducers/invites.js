@@ -97,7 +97,7 @@ function createState(json, incomingState, isUpdate = false ) {
       state.invitesById[invite.sig_id].sig_id = invite.sig_id;
 
     }
-    state.statsObj.percentComplete = state.statsObj.unread / (state.statsObj.unread + state.statsObj.read);
+    state.statsObj.percentComplete = 1 - state.statsObj.unread / (state.statsObj.unread + state.statsObj.read);
   });
   return { ...state };
 }

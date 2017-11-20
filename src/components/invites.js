@@ -21,21 +21,20 @@ export const InvitesComponent = ({invites}) => {
   // console.log('state in Component', this.props);
   let invitations = [ [], [] ]
   invites.forEach((invite, idx) => {
-  
+
 
       if (invite.status === "read") {
         invitations[0].push(<Card key={idx}>
-          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} inviteMsg={invite.invite}  vector={invite.vector} subject={invite.subject} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} />
+          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} inviteMsg={invite.invite}  vector={invite.vector} subject={invite.subject} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteURL = {invite.url} inviteTime={invite.invite_time} invite={invite} isJoinRequest={invite.isJoinRequest}/>
         </Card>)
       } else {
         invitations[1].push(<Card key={idx}>
-          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} subject={invite.subject} inviteMsg={invite.invite}  vector={invite.vector} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteTime={invite.invite_time} invite={invite} />
+          <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} subject={invite.subject} inviteMsg={invite.invite}  vector={invite.vector} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteURL = {invite.url} inviteTime={invite.invite_time} invite={invite} isJoinRequest={invite.isJoinRequest}/>
         </Card>)
       };
 
   })
 
-// isJoinRequest={isJoinRequest} inviteSubject={subject[0]} inviteURL={url[0]}
 
     return (
       <Container>

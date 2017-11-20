@@ -32,7 +32,7 @@ class App extends Component {
         </header>
 
       </div>
-      <NavToolBar statesObj={this.props.invites.statsObj} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read}     duplicates={this.props.duplicates}   >
+      <NavToolBar percentComplete={this.props.invites.statsObj.percentComplete} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read}     duplicates={this.props.duplicates}   >
 
       {/* percentComplete={this.props.statsObj.percentComplete} */}
       </NavToolBar>

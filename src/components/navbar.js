@@ -18,22 +18,26 @@ import {
 } from 'reactstrap';
 import {handleUpdates} from '../actions';
 
+
 class NavToolBar extends React.Component {
   // the react community seems to be drifting towards almost exclusively toward
   // functional components but i still wanted to highlight that I can write a class component
 
   render() {
 
+    let percentRead =  Math.round(this.props.percentComplete * 100)
+    let percentUnread = Math.round((1 - this.props.percentComplete) * 100)
+
     return (<div>
       <Navbar color="blue" light="light" expand="md">
-        <NavbarBrand href="/">Unread Messages: {`${this.props.duplicates}`}</NavbarBrand>
-        <Col sm="9" md={{ size: 8, offset: 1 }}>
+        <NavbarBrand href="/">Duplicate Messages: {`${this.props.duplicates}`}</NavbarBrand>
+        <Col sm="9" md={{ size: 6, offset: 1 }}>
           <Progress multi>
-        <Progress bar value="15" />
-        <Progress bar color="success" value={`${this.props.statsObj}`} />
-        <Progress bar color="info" value="25" />
-        <Progress bar color="warning" value="20" />
-        <Progress bar color="danger" value="5" />
+        {/* <Progress bar value="15"> </Progress> */}
+        {/* <Progress bar color="success" value={`${this.props.statsObj}`} /> */}
+        <Progress bar color="info" value={`${percentRead}`} > {`${percentRead}%`} </Progress>
+        <Progress bar color="warning" value={`${percentUnread}`} > {`${percentUnread}%`}</Progress>
+
       </Progress>
       {/* */}
           {/* <div class="progress">
@@ -51,10 +55,9 @@ class NavToolBar extends React.Component {
           }
         </Col>
         <UncontrolledDropdown size="small">
-          <DropdownToggle caret="caret" id="branchInput"></DropdownToggle>
+          <DropdownToggle caret="caret" id="branchInput"> Toggle Me </DropdownToggle>
           <DropdownMenu >
-            <DropdownItem>
-              Time since invitation:</DropdownItem>
+
             <DropdownItem
               //  an 'anonymizing' Fn prevents strange re-renders in react components
               onClick={() => {
@@ -76,7 +79,8 @@ class NavToolBar extends React.Component {
 
 export const mapStateToProps = (state, ownProps) => {
 
-  let statsObj = state.invites.invites.statsObj;
+  let statsObj = state.invites.statsObj;
+  console.log(state.invites);
   return {
     statsObj,
   };
