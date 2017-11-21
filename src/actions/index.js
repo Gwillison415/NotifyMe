@@ -1,12 +1,14 @@
-import {invitationsJson as mockJson} from '../invitations';
- import {invitationsUpdateJson as mockJsonUpdate} from '../static/invitationsUpdate';
-
+import {invitationsJson as mockJson} from '../static/invitations';
+import {invitationsUpdateJson as mockJsonUpdate} from '../static/invitationsUpdate';
+export const INVITES_REQUEST_STARTED = "INVITES_REQUEST_STARTED"
+export const INVITES_REQUEST_SUCCESS = "INVITES_REQUEST_SUCCESS"
+export const UPDATE_JSON = 'UPDATE_JSON'
+export const TOGGLE_JOIN = 'TOGGLE_JOIN'
 //Strings are prefered to symbols and promises because serializable actions enable several
 // of Redux's defining features, such as time travel debugging, recording and replaying actions
 // we're going to take time to put serializable variables in the global namespace such that we can re-use them
 // which speeds up creating any action that may re-use them, and we can now unit test them.
-export const INVITES_REQUEST_STARTED = "INVITES_REQUEST_STARTED"
-export const INVITES_REQUEST_SUCCESS = "INVITES_REQUEST_SUCCESS"
+
 
 //real world requires a fetch call to an API and I would imagine you'd like to know that I can
 // 1 make that asynchronous call
@@ -24,28 +26,23 @@ such that there is less disruption / bugs / thinking as you move between environ
   //     dispatch({type: INVITES_REQUEST_SUCCESS, invites: json})
   //   }
 
+  return async (dispatch) => {
+    let mockJsonCall = await mockJson;
+    dispatch({type: INVITES_REQUEST_STARTED, response: mockJsonCall})
 
-    //TODO expand to react to each mockJson, mockJsonUpdate
-    // for fun, because this framework will 'react' to new data
-
-    return async (dispatch) => {
-      let mockJsonCall = await mockJson;
-      dispatch({type: INVITES_REQUEST_STARTED, response: mockJsonCall})
-
-      dispatch({type: INVITES_REQUEST_SUCCESS})
-    }
+    dispatch({type: INVITES_REQUEST_SUCCESS})
+  }
 
 }
 
 
-export const UPDATE_JSON = 'UPDATE_JSON'
 export const handleUpdates = () => {
   return async (dispatch) => {
     dispatch({type: UPDATE_JSON, response: mockJsonUpdate, isUpdate: true})
   }
 }
 
-export const TOGGLE_JOIN = 'TOGGLE_JOIN'
+
 export const toggle = () => {
   return async (dispatch) => {
     dispatch({type: TOGGLE_JOIN, response: mockJson.invites})

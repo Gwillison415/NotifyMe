@@ -1,9 +1,4 @@
-import {
-  INVITES_REQUEST_STARTED,
-  INVITES_REQUEST_SUCCESS,
-  UPDATE_JSON,
-  TOGGLE_JOIN,
-} from '../actions'
+import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_JOIN} from '../actions'
 
 const initialState = {
   ids: [],
@@ -13,17 +8,14 @@ const initialState = {
   statsObj: {
     read: 0,
     unread: 0,
-    duplicates: 0,
+    duplicates: 0
   }
 }
 let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
 let joinRequest = new RegExp(/\bjoin Situation\b/)
 
-
-function createState(json, incomingState, isUpdate = false ) {
+function createState(json, incomingState, isUpdate = false) {
   const state = incomingState
-
-
 
   // if (!filterDupesObj[invite.sig_id]) {
   //   filterDupesObj[invite.sig_id] = 0
@@ -46,8 +38,8 @@ function createState(json, incomingState, isUpdate = false ) {
     if (state.invitesById.hasOwnProperty(invite.sig_id)) {
 
       if (state.invitesById[invite.sig_id].subject === subject[0].slice(1, subject[0].length - 1)) {
-    // only thing I really want to do with dupes is count them so I can potentially order them by #people who sent them -
-    // this possible freak out indication on a dashboard represents potentially useful data to cache on the clien
+        // only thing I really want to do with dupes is count them so I can potentially order them by #people who sent them -
+        // this possible freak out indication on a dashboard represents potentially useful data to cache on the clien
         state.statsObj.duplicates++
         return;
       } else {
@@ -58,7 +50,11 @@ function createState(json, incomingState, isUpdate = false ) {
           state.statsObj.read++;
         }
         // write new entry into state tree
-        state.invites.push(Object.assign(invite, {subject: subject[0].slice(1, subject[0].length - 1), url: url[0], isJoinRequest}))
+        state.invites.push(Object.assign(invite, {
+          subject: subject[0].slice(1, subject[0].length - 1),
+          url: url[0],
+          isJoinRequest
+        }))
 
         state.ids = state.ids.concat(invite.invite_id);
         state.invitesById[invite.sig_id] = {};
@@ -74,7 +70,6 @@ function createState(json, incomingState, isUpdate = false ) {
         state.invitesById[invite.sig_id].percentComplete = 0;
       }
 
-
     } else {
       // If there isn't an entry, write entry into state tree
       if (invite.status === "unread") {
@@ -82,7 +77,11 @@ function createState(json, incomingState, isUpdate = false ) {
       } else {
         state.statsObj["read"]++;
       }
-      state.invites.push(Object.assign(invite, {subject: subject[0].slice(1, subject[0].length - 1), url: url[0], isJoinRequest}))
+      state.invites.push(Object.assign(invite, {
+        subject: subject[0].slice(1, subject[0].length - 1),
+        url: url[0],
+        isJoinRequest
+      }))
 
       state.ids = state.ids.concat(invite.invite_id);
       state.invitesById[invite.sig_id] = {};
@@ -99,11 +98,12 @@ function createState(json, incomingState, isUpdate = false ) {
     }
     state.statsObj.percentComplete = 1 - state.statsObj.unread / (state.statsObj.unread + state.statsObj.read);
   });
-  return { ...state };
+  return {
+    ...state
+  };
 }
 
-
-export default (state = initialState, action) => {
+export default(state = initialState, action) => {
 
   switch (action.type) {
     case INVITES_REQUEST_STARTED:
@@ -115,10 +115,10 @@ export default (state = initialState, action) => {
         // invites: action.invites,
       }
     case TOGGLE_JOIN:
-    return {
-      ...state,
-      invites: toggleProperty(state.invites, action.invite, "someprop")
-    }
+      return {
+        ...state,
+        invites: toggleProperty(state.invites, action.invite, "someprop")
+      }
     case UPDATE_JSON:
       return createState(action.response.invites, state, action.isUpdate);
     default:
@@ -126,13 +126,14 @@ export default (state = initialState, action) => {
   }
 }
 
-
 function toggleProperty(invites, invite, property) {
   console.log(property);
   const index = invites.indexOf(invite)
   return [
-    ...invites.slice(0, index),
-    { ...invite, [property]: !invite[property] },
-    ...invites.slice(index + 1),
+    ...invites.slice(0, index), {
+      ...invite,
+      [property]: !invite[property]
+    },
+    ...invites.slice(index + 1)
   ];
 }

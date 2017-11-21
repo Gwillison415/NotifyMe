@@ -83,17 +83,7 @@ class ProgressArc extends Component {
   }
 }
 
-// ProgressArc.propTypes = {
-//   id: PropTypes.number.isRequired,
-//   duration: PropTypes.number.isRequired,
-//   percentComplete: PropTypes.number.isRequired,
-// };
-//
-// ProgressArc.defaultProps = {
-//   id: 0,
-//   percentComplete: 0,
-//   duration: 2000,
-// };
+
 
 export const mapStateToProps = (state, ownProps) => {
   const id = ownProps.widgetId;

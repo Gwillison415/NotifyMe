@@ -32,9 +32,9 @@ class App extends Component {
         </header>
 
       </div>
-      <NavToolBar percentComplete={this.props.invites.statsObj.percentComplete} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read}     duplicates={this.props.duplicates}   >
+      <NavToolBar percentComplete={this.props.invites.statsObj.percentComplete} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read} duplicates={this.props.duplicates}>
 
-      {/* percentComplete={this.props.statsObj.percentComplete} */}
+
       </NavToolBar>
 
       <InvitesComponent invites={this.props.invites}></InvitesComponent>
@@ -47,11 +47,7 @@ const mapStateToProps = state => {
   const invites = state.invites
   const duplicates = state.invites.statsObj.duplicates
   const percentComplete = state.invites.statsObj.percentComplete
-  return ({
-    invites,
-    duplicates,
-    percentComplete,
-  })
+  return ({invites, duplicates, percentComplete})
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   getInvites

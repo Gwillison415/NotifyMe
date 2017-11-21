@@ -2,13 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
   Progress,
   UncontrolledDropdown,
   DropdownToggle,
@@ -18,28 +13,33 @@ import {
 } from 'reactstrap';
 import {handleUpdates} from '../actions';
 
-
 class NavToolBar extends React.Component {
   // the react community seems to be drifting towards almost exclusively toward
   // functional components but i still wanted to highlight that I can write a class component
 
   render() {
 
-    let percentRead =  Math.round(this.props.percentComplete * 100)
+    let percentRead = Math.round(this.props.percentComplete * 100)
     let percentUnread = Math.round((1 - this.props.percentComplete) * 100)
 
     return (<div>
       <Navbar color="blue" light="light" expand="md">
         <NavbarBrand href="/">Duplicate Messages: {`${this.props.duplicates}`}</NavbarBrand>
-        <Col sm="9" md={{ size: 6, offset: 1 }}>
-          <Progress multi>
-        {/* <Progress bar value="15"> </Progress> */}
-        {/* <Progress bar color="success" value={`${this.props.statsObj}`} /> */}
-        <Progress bar color="info" value={`${percentRead}`} > {`${percentRead}%`} </Progress>
-        <Progress bar color="warning" value={`${percentUnread}`} > {`${percentUnread}%`}</Progress>
+        <Col sm="9" md={{
+            size: 6,
+            offset: 1
+          }}>
+          <Progress multi="multi">
+            {/* <Progress bar value="15"> </Progress> */}
+            {/* <Progress bar color="success" value={`${this.props.statsObj}`} /> */}
+            <Progress bar="bar" color="info" value={`${percentRead}`}>
+              {`${percentRead}%`}
+            </Progress>
+            <Progress bar="bar" color="warning" value={`${percentUnread}`}>
+              {`${percentUnread}%`}</Progress>
 
-      </Progress>
-      {/* */}
+          </Progress>
+          {/*  */}
           {/* <div class="progress">
 
             <div className="progress-bar" role="progressbar" style={{
@@ -55,7 +55,9 @@ class NavToolBar extends React.Component {
           }
         </Col>
         <UncontrolledDropdown size="small">
-          <DropdownToggle caret="caret" id="branchInput"> Toggle Me </DropdownToggle>
+          <DropdownToggle caret="caret" id="branchInput">
+            Toggle Me
+          </DropdownToggle>
           <DropdownMenu >
 
             <DropdownItem
@@ -81,9 +83,7 @@ export const mapStateToProps = (state, ownProps) => {
 
   let statsObj = state.invites.statsObj;
   console.log(state.invites);
-  return {
-    statsObj,
-  };
+  return {statsObj};
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleUpdates

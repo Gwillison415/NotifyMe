@@ -1,6 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
 import {UCDropdown} from './unControlledNavDropDown';
 
 import {
@@ -9,10 +8,8 @@ import {
   CardTitle,
   CardText,
   CardImg,
-
   CardBody,
-  CardSubtitle,
-
+  CardSubtitle
 } from 'reactstrap';
 
 // import {imageContent} from '../static/imageSources';
@@ -36,7 +33,6 @@ export const createVectorCSSClass = (source) => {
   }
 }
 
-
 export const InviteComponent = ({
   sender,
   inviteKey,
@@ -56,27 +52,29 @@ export const InviteComponent = ({
   let sourceClass = createVectorCSSClass(vector);
   let timeCreatedHumanReadable = NOTIFY_API.returnDate(inviteTime);
   let elapsedTimeHumanReadable = NOTIFY_API.getDateTimeSince(new Date(moment.unix(inviteTime)))
-  let statusColor = status === "read"? "secondary" : "danger"
+  let statusColor = status === "read"
+    ? "secondary"
+    : "danger"
 
-
-  return (
-    <Card   color={statusColor}>
+  return (<Card color={statusColor}>
     <CardImg className="top" width="110%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
     <CardBody>
       <CardTitle width="140">{subject}</CardTitle>
-      <CardSubtitle className={`${sourceClass}`}>Source: {vector} sig_id:{sig_id}</CardSubtitle>
-      <CardText> {`Created On: \n ${timeCreatedHumanReadable}`}
+      <CardSubtitle className={`${sourceClass}`}>Source: {vector}
+        sig_id:{sig_id}</CardSubtitle>
+      <CardText>
+        {`Created On: \n ${timeCreatedHumanReadable}`}
 
-    </CardText>
-    {isJoinRequest?
-      <span>
-      <Button href={inviteURL} color="primary">{status.toUpperCase()} Join Now</Button>
-      </span> : null}
-    <UCDropdown size="auto" elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL} color="success">
-
-    </UCDropdown>
-
-
+      </CardText>
+      {
+        isJoinRequest
+          ? <span>
+              <Button href={inviteURL} color="primary">{status.toUpperCase()}
+                Join Now</Button>
+            </span>
+          : null
+      }
+      <UCDropdown size="auto" elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL} color="success"></UCDropdown>
 
     </CardBody>
   </Card>)
@@ -87,12 +85,7 @@ export const mapStateToProps = (state, ownProps) => {
   const subject = state.invites.invitesById[id].subject
   const sender = state.invites.invitesById[id].sender_id;
 
-
-  return {
-    subject,
-    sender,
-
-  };
+  return {subject, sender};
 };
 
 // const mapDispatchToProps = dispatch => bindActionCreators({
