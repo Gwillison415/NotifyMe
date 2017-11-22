@@ -12,10 +12,8 @@ import InvitesComponent from './components/invites';
 import NavToolBar from './components/navbar';
 
 class App extends Component {
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log('that happened');
-  //   return nextProps.invites !== this.props.invites
-  // }
+// the would be normal method to accept incoming data upon mounting of main component
+// I'd probably use an render-if logic if it was a multi page app
   componentDidMount() {
     this.props.getInvites()
   }

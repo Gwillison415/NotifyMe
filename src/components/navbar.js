@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {returnToInitialInvites, clearData, } from '../actions'
 import {
   Navbar,
   NavbarBrand,
@@ -30,8 +31,6 @@ class NavToolBar extends React.Component {
             offset: 1
           }}>
           <Progress multi="multi">
-            {/* <Progress bar value="15"> </Progress> */}
-            {/* <Progress bar color="success" value={`${this.props.statsObj}`} /> */}
             <Progress bar="bar" color="info" value={`${percentRead}`}>
               {`${percentRead}%`}
             </Progress>
@@ -39,20 +38,6 @@ class NavToolBar extends React.Component {
               {`${percentUnread}%`}</Progress>
 
           </Progress>
-          {/*  */}
-          {/* <div class="progress">
-
-            <div className="progress-bar" role="progressbar" style={{
-              "width" : "15%"
-            }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-            <div className="progress-bar bg-success" role="progressbar" style={{
-              "width" : "15%"
-            }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-            <div className="progress-bar bg-info" role="progressbar" style={{
-              "width" : "15%"
-            }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-          </div> */
-          }
         </Col>
         <UncontrolledDropdown size="small">
           <DropdownToggle caret="caret" id="branchInput">
@@ -65,7 +50,19 @@ class NavToolBar extends React.Component {
               onClick={() => {
                 this.props.handleUpdates()
               }}>
-              Trigger Updated invitations</DropdownItem>
+              Trigger Updated invitations JSON</DropdownItem>
+            <DropdownItem
+              //  an 'anonymizing' Fn prevents strange re-renders in react components
+              onClick={() => {
+                this.props.returnToInitialInvites()
+              }}>
+              Trigger Invitation JSON</DropdownItem>
+            <DropdownItem
+              //  an 'anonymizing' Fn prevents strange re-renders in react components
+              onClick={() => {
+                this.props.clearData()
+              }}>
+              Clear Data</DropdownItem>
             <DropdownItem divider="divider"/>
             <DropdownItem >
               <a href="https://github.com/Gwillison415/NotifyMe">Github Repo</a>
@@ -80,13 +77,18 @@ class NavToolBar extends React.Component {
 }
 
 export const mapStateToProps = (state, ownProps) => {
-
+  let invites = state.invites.invtes
   let statsObj = state.invites.statsObj;
   console.log(state.invites);
-  return {statsObj};
+  return {
+    statsObj,
+    invites
+  };
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
-  handleUpdates
+  handleUpdates,
+  returnToInitialInvites,
+  clearData,
 }, dispatch)
 
-export default connect(null, mapDispatchToProps)(NavToolBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavToolBar);

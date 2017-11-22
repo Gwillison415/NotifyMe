@@ -4,6 +4,10 @@ export const INVITES_REQUEST_STARTED = "INVITES_REQUEST_STARTED"
 export const INVITES_REQUEST_SUCCESS = "INVITES_REQUEST_SUCCESS"
 export const UPDATE_JSON = 'UPDATE_JSON'
 export const TOGGLE_JOIN = 'TOGGLE_JOIN'
+export const RESET_JSON = "RESET_JSON"
+export const CLEAR_DATA = "CLEAR_DATA"
+
+
 //Strings are prefered to symbols and promises because serializable actions enable several
 // of Redux's defining features, such as time travel debugging, recording and replaying actions
 // we're going to take time to put serializable variables in the global namespace such that we can re-use them
@@ -37,14 +41,28 @@ such that there is less disruption / bugs / thinking as you move between environ
 
 
 export const handleUpdates = () => {
+  // mockJsonUpdate = await mockJsonUpdate;
   return async (dispatch) => {
     dispatch({type: UPDATE_JSON, response: mockJsonUpdate, isUpdate: true})
+    dispatch({type: INVITES_REQUEST_SUCCESS})
   }
 }
 
+export const returnToInitialInvites = () => {
+  // mockJson = await mockJson;
+  return async (dispatch) => {
+    dispatch({type: RESET_JSON, response: mockJson, isUpdate: true})
+    dispatch({type: INVITES_REQUEST_SUCCESS})
+  }
+}
+
+export const clearData = () => {
+  console.log('clearData');
+  return (dispatch) => dispatch({type: CLEAR_DATA})
+}
 
 export const toggle = () => {
   return async (dispatch) => {
-    dispatch({type: TOGGLE_JOIN, response: mockJson.invites})
+    dispatch({type: TOGGLE_JOIN, response: mockJson.invites, isUpdate: true})
   }
 }

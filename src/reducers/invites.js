@@ -1,5 +1,15 @@
-import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_JOIN} from '../actions'
-
+import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_JOIN, RESET_JSON, CLEAR_DATA, } from '../actions'
+const initialState2 = {
+  ids: [],
+  invites: [],
+  invitesById: {},
+  fetchingInvites: true,
+  statsObj: {
+    read: 0,
+    unread: 0,
+    duplicates: 0
+  }
+}
 const initialState = {
   ids: [],
   invites: [],
@@ -11,18 +21,12 @@ const initialState = {
     duplicates: 0
   }
 }
+
 let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
 let joinRequest = new RegExp(/\bjoin Situation\b/)
 
 function createState(json, incomingState, isUpdate = false) {
-  const state = incomingState
-
-  // if (!filterDupesObj[invite.sig_id]) {
-  //   filterDupesObj[invite.sig_id] = 0
-  // }
-  //
-
-  // filterDupesObj[invite.sig_id]++
+let state = {...incomingState}
 
   json.forEach((invite) => {
     //parse the invite message for truly relevant info given limited 'real estate'
@@ -39,7 +43,7 @@ function createState(json, incomingState, isUpdate = false) {
 
       if (state.invitesById[invite.sig_id].subject === subject[0].slice(1, subject[0].length - 1)) {
         // only thing I really want to do with dupes is count them so I can potentially order them by #people who sent them -
-        // this possible freak out indication on a dashboard represents potentially useful data to cache on the clien
+        // this possible "high priority" indication on a dashboard represents potentially useful data to cache on the client
         state.statsObj.duplicates++
         return;
       } else {
@@ -120,7 +124,12 @@ export default(state = initialState, action) => {
         invites: toggleProperty(state.invites, action.invite, "someprop")
       }
     case UPDATE_JSON:
-      return createState(action.response.invites, state, action.isUpdate);
+      return createState(action.response.invites, initialState, action.isUpdate);
+    case RESET_JSON:
+      return createState(action.response.invites, initialState, action.isUpdate);
+    case CLEAR_DATA:
+      console.log("2",initialState2);
+      return initialState2;
     default:
       return state
   }
