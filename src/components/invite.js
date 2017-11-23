@@ -60,8 +60,14 @@ export const InviteComponent = ({
     <CardImg className="top" width="110%" src={NOTIFY_API.findAvatar(sender)} alt="Card image cap"/>
     <CardBody>
       <CardTitle width="140">{subject}</CardTitle>
-      <CardSubtitle className={`${sourceClass}`}>Source: {vector}
-        sig_id:{sig_id}</CardSubtitle>
+      <CardSubtitle className={`${sourceClass}`}>
+        <div>
+          Source:  {vector}
+        </div>
+        <div>
+          sig_id:{sig_id}
+        </div>
+      </CardSubtitle>
       <CardText>
         {`Created On: \n ${timeCreatedHumanReadable}`}
 
