@@ -25,7 +25,7 @@ class NavToolBar extends React.Component {
 
     return (<div>
       <Navbar color="blue" light="light" expand="md">
-        <NavbarBrand href="/">Duplicate Messages: {`${this.props.duplicates}`}</NavbarBrand>
+        <NavbarBrand className="text-warning" href="/">Duplicate Messages: {`${this.props.duplicates}`}</NavbarBrand>
         <Col sm="9" md={{
             size: 6,
             offset: 1
