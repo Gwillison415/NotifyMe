@@ -77,9 +77,8 @@ class NavToolBar extends React.Component {
 }
 
 export const mapStateToProps = (state, ownProps) => {
-  let invites = state.invites.invtes
+  let invites = state.invites.invites
   let statsObj = state.invites.statsObj;
-  console.log(state.invites);
   return {
     statsObj,
     invites

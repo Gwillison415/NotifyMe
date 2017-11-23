@@ -25,8 +25,8 @@ const initialState = {
 let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
 let joinRequest = new RegExp(/\bjoin Situation\b/)
 
-function createState(json, incomingState, isUpdate = false) {
-let state = {...incomingState}
+function createState(json, incomingState = initialState, isUpdate = false) {
+let state = incomingState
 
   json.forEach((invite) => {
     //parse the invite message for truly relevant info given limited 'real estate'
@@ -39,6 +39,7 @@ let state = {...incomingState}
     //bool to indicate when to put up a 'join' button
     let isJoinRequest = joinRequest.test(invite.invite)
 
+  // we need to keep a single copy of all messages that have yet to be joined and only one.
     if (state.invitesById.hasOwnProperty(invite.sig_id)) {
 
       if (state.invitesById[invite.sig_id].subject === subject[0].slice(1, subject[0].length - 1)) {
@@ -47,7 +48,7 @@ let state = {...incomingState}
         state.statsObj.duplicates++
         return;
       } else {
-        console.log('invite', invite.status);
+        console.log('invite old entry', invite.status);
         if (invite.status === "unread") {
           state.statsObj.unread++;
         } else {
@@ -59,8 +60,8 @@ let state = {...incomingState}
           url: url[0],
           isJoinRequest
         }))
-
-        state.ids = state.ids.concat(invite.invite_id);
+  console.log('inside old invite');
+        state.ids = state.ids.concat(invite.sig_id);
         state.invitesById[invite.sig_id] = {};
         state.invitesById[invite.sig_id].invite = invite.invite;
         state.invitesById[invite.sig_id].sender_id = invite.sender_id;
@@ -86,8 +87,8 @@ let state = {...incomingState}
         url: url[0],
         isJoinRequest
       }))
-
-      state.ids = state.ids.concat(invite.invite_id);
+      console.log('inside new invite');
+      state.ids = state.ids.concat(invite.sig_id);
       state.invitesById[invite.sig_id] = {};
       state.invitesById[invite.sig_id].invite = invite.invite;
       state.invitesById[invite.sig_id].sender_id = invite.sender_id;
@@ -124,11 +125,13 @@ export default(state = initialState, action) => {
         invites: toggleProperty(state.invites, action.invite, "someprop")
       }
     case UPDATE_JSON:
-      return createState(action.response.invites, initialState, action.isUpdate);
+    console.log('UPDATE_JSON', initialState);
+      return createState(action.response.invites);
     case RESET_JSON:
-      return createState(action.response.invites, initialState, action.isUpdate);
+    console.log('RESET_JSON', initialState);
+      return createState(action.response.invites);
     case CLEAR_DATA:
-      console.log("2",initialState2);
+      console.log("2", initialState2, '1', initialState);
       return initialState2;
     default:
       return state

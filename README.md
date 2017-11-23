@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/Gwillison415/NotifyMe/badge.svg?branch=master)](https://coveralls.io/github/Gwillison415/NotifyMe?branch=master)
+
 This project is [live](http://grantwillison.tech/) via the link.
 
 If you would like to cone this repo, it can be run locally with ```npm start``` and will host @ http://localhost:3000/

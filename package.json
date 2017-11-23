@@ -4,10 +4,13 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@types/lodash.clonedeep": "^4.5.3",
+    "lodash.clonedeep": "^4.5.0",
     "moment": "^2.9.xx",
     "react": "^16.1.1",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.1.1",
+    "react-particles-js": "^2.1.0",
     "react-popper": "^0.7.4",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
@@ -24,6 +27,9 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "babel-jest": "^21.2.0",
+    "jest": "^21.2.1",
+    "react-addons-test-utils": "^15.6.2",
     "redux-devtools": "^3.4.1",
     "redux-devtools-extension": "^2.13.2"
   }
