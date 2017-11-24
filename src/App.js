@@ -28,21 +28,21 @@ class App extends Component {
   render() {
     return (<Container>
       <P params={{
-        // particles: particlesConfig.particles,
+        particles: particlesConfig.particles,
         // interactivity : particlesConfig.interactivity,
-
-         particles: {
-           number: {
-             value: 150
-           },
-           line_linked: {
-             shadow: {
-               enable: false,
-               color: "#3CA9D1",
-               blur: 5
-             }
-           }
-         }
+         //
+        //  particles: {
+        //    number: {
+        //      value: 150
+        //    },
+        //    line_linked: {
+        //      shadow: {
+        //        enable: false,
+        //        color: "#3CA9D1",
+        //        blur: 5
+        //      }
+        //    }
+        //  }
        }} style={{
          position: "fixed",
          "z-index": 4,
