@@ -24,24 +24,24 @@ class NavToolBar extends React.Component {
     let percentUnread = Math.round((1 - this.props.percentComplete) * 100)
 
     return (<div>
-      <Navbar color="blue" light="light" expand="md">
+      <Navbar color="blue" light={true} expand="md">
         <NavbarBrand className="text-warning" href="/">Duplicate Messages: {`${this.props.duplicates}`}</NavbarBrand>
         <Col sm="9" md={{
             size: 6,
             offset: 1
           }}>
-          <Progress multi="multi">
+          <Progress multi={true}>
 
-            <Progress bar="bar" color="warning" value={`${percentUnread}`}>
+            <Progress bar={true} color="warning" value={`${percentUnread}`}>
               {`${percentUnread}%`}</Progress>
-            <Progress bar="bar" color="info" value={`${percentRead}`}>
+            <Progress bar={true} color="info" value={`${percentRead}`}>
               {`${percentRead}%`}
             </Progress>
 
           </Progress>
         </Col>
         <UncontrolledDropdown size="small">
-          <DropdownToggle caret="true" id="branchInput">
+          <DropdownToggle caret={true} id="branchInput">
             Toggle Me
           </DropdownToggle>
           <DropdownMenu >
@@ -64,7 +64,7 @@ class NavToolBar extends React.Component {
                 this.props.clearData()
               }}>
               Clear Data</DropdownItem>
-            <DropdownItem divider="divider"/>
+              <DropdownItem divider={true}/>
             <DropdownItem >
               <a href="https://github.com/Gwillison415/NotifyMe">Github Repo</a>
             </DropdownItem>

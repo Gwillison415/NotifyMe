@@ -29,20 +29,7 @@ class App extends Component {
     return (<Container>
       <P params={{
         particles: particlesConfig.particles,
-        // interactivity : particlesConfig.interactivity,
-         //
-        //  particles: {
-        //    number: {
-        //      value: 150
-        //    },
-        //    line_linked: {
-        //      shadow: {
-        //        enable: false,
-        //        color: "#3CA9D1",
-        //        blur: 5
-        //      }
-        //    }
-        //  }
+        interactivity : particlesConfig.interactivity,
        }} style={{
          position: "fixed",
          "zIndex": 0,

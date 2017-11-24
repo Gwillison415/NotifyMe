@@ -92,9 +92,9 @@ export const particlesConfig = {
         "bubble": {
           "distance": 400,
           "size": 40,
-          "duration": 2,
+          "duration": .6,
           "opacity": 8,
-          "speed": 3
+          "speed": .1
         },
         "repulse": {
           "distance": 200,
