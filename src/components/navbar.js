@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {returnToInitialInvites, clearData, } from '../actions'
+import {returnToInitialInvites, clearData} from '../actions'
 import {
   Navbar,
   NavbarBrand,
@@ -31,16 +31,17 @@ class NavToolBar extends React.Component {
             offset: 1
           }}>
           <Progress multi="multi">
+
+            <Progress bar="bar" color="warning" value={`${percentUnread}`}>
+              {`${percentUnread}%`}</Progress>
             <Progress bar="bar" color="info" value={`${percentRead}`}>
               {`${percentRead}%`}
             </Progress>
-            <Progress bar="bar" color="warning" value={`${percentUnread}`}>
-              {`${percentUnread}%`}</Progress>
 
           </Progress>
         </Col>
         <UncontrolledDropdown size="small">
-          <DropdownToggle caret="caret" id="branchInput">
+          <DropdownToggle caret="true" id="branchInput">
             Toggle Me
           </DropdownToggle>
           <DropdownMenu >
@@ -79,15 +80,12 @@ class NavToolBar extends React.Component {
 export const mapStateToProps = (state, ownProps) => {
   let invites = state.invites.invites
   let statsObj = state.invites.statsObj;
-  return {
-    statsObj,
-    invites
-  };
+  return {statsObj, invites};
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleUpdates,
   returnToInitialInvites,
-  clearData,
+  clearData
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavToolBar);

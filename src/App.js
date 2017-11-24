@@ -45,7 +45,7 @@ class App extends Component {
         //  }
        }} style={{
          position: "fixed",
-         "z-index": 4,
+         "zIndex": 0,
          background: "#2e3250",
          top: 0,
          left: 0,

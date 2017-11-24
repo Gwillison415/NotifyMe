@@ -22,23 +22,15 @@ export const InvitesComponent = ({invites, invitesById, ids}) => {
   //
   // })
 
-
   ids.forEach((id, idx) => {
 
     if (invitesById[id].status === "read") {
       invitations[0].push(<Card key={idx}>
-        <InviteComponent inviteID={invitesById[id].invite_id} sender={invitesById[id].sender_id}
-           inviteMsg={invitesById[id].invite} vector={invitesById[id].vector} subject={invitesById[id].subject}
-            status={invitesById[id].status} sig_id={invitesById[id].sig_id} inviteSelected={invitesById[id].selected}
-             inviteURL={invitesById[id].url} inviteTime={invitesById[id].invite_time} invite={invitesById[id]}
-              isJoinRequest={invitesById[id].isJoinRequest}/>
+        <InviteComponent inviteID={invitesById[id].invite_id} sender={invitesById[id].sender_id} inviteMsg={invitesById[id].invite} vector={invitesById[id].vector} subject={invitesById[id].subject} status={invitesById[id].status} sig_id={invitesById[id].sig_id} inviteSelected={invitesById[id].selected} inviteURL={invitesById[id].url} inviteTime={invitesById[id].invite_time} invite={invitesById[id]} isJoinRequest={invitesById[id].isJoinRequest}/>
       </Card>)
     } else {
       invitations[1].push(<Card key={idx}>
-        <InviteComponent inviteID={invitesById[id].invite_id} sender={invitesById[id].sender_id} subject={invitesById[id].subject}
-           inviteMsg={invitesById[id].invite} vector={invitesById[id].vector} status={invitesById[id].status} sig_id={invitesById[id].sig_id}
-            inviteSelected={invitesById[id].selected} inviteURL={invitesById[id].url} inviteTime={invitesById[id].invite_time}
-             invite={invitesById[id]} isJoinRequest={invitesById[id].isJoinRequest}/>
+        <InviteComponent inviteID={invitesById[id].invite_id} sender={invitesById[id].sender_id} subject={invitesById[id].subject} inviteMsg={invitesById[id].invite} vector={invitesById[id].vector} status={invitesById[id].status} sig_id={invitesById[id].sig_id} inviteSelected={invitesById[id].selected} inviteURL={invitesById[id].url} inviteTime={invitesById[id].invite_time} invite={invitesById[id]} isJoinRequest={invitesById[id].isJoinRequest}/>
       </Card>)
     };
 
@@ -51,14 +43,14 @@ export const InvitesComponent = ({invites, invitesById, ids}) => {
             size: 12,
             pull: 1
           }}>
-          <h2 >Unread Messages</h2>
+          <h2 className="text-warning">Unread Messages</h2>
           {invitations[1]}
         </Col>
         <Col sm="6" xs={{
             size: 12,
             pull: 1
           }}>
-          <h2>Read Messages</h2>
+          <h2 className="text-info">Read Messages</h2>
           {invitations[0]}
         </Col>
       </Row>
