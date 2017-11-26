@@ -3,7 +3,7 @@ import {invitationsUpdateJson as mockJsonUpdate} from '../static/invitationsUpda
 export const INVITES_REQUEST_STARTED = "INVITES_REQUEST_STARTED"
 export const INVITES_REQUEST_SUCCESS = "INVITES_REQUEST_SUCCESS"
 export const UPDATE_JSON = 'UPDATE_JSON'
-export const TOGGLE_JOIN = 'TOGGLE_JOIN'
+export const TOGGLE_PROP = 'TOGGLE_PROP'
 export const RESET_JSON = "RESET_JSON"
 export const CLEAR_DATA = "CLEAR_DATA"
 
@@ -61,8 +61,9 @@ export const clearData = () => {
   return (dispatch) => dispatch({type: CLEAR_DATA})
 }
 
-export const toggle = () => {
+export const toggleProperty = (inviteID, property) => {
+  console.log('prop toggled');
   return async (dispatch) => {
-    dispatch({type: TOGGLE_JOIN, response: mockJson.invites, isUpdate: true})
+    dispatch({type: TOGGLE_PROP, response: inviteID, isUpdate: true})
   }
 }

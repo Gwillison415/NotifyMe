@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import {UCDropdown} from './unControlledNavDropDown';
+import {toggleProperty} from '../actions';
+import {bindActionCreators} from 'redux'
 
 import {
   Card,
@@ -74,10 +76,16 @@ export const InviteComponent = ({
       </CardText>
       {
         isJoinRequest
-          ? <span>
-              <Button href={inviteURL} color="primary">{status.toUpperCase()}
-                Join Now</Button>
-            </span>
+          ? <div>
+            <span>
+                <Button href={inviteURL} color="primary">{status.toUpperCase()}
+                  </Button>
+
+              </span>
+              <span>
+                <Button onClick={() => {toggleProperty(invite, "isJoinRequest")}} >Join Now</Button>
+              </span>
+          </div>
           : null
       }
       <UCDropdown size="auto" elapsedTimeHumanReadable={elapsedTimeHumanReadable} inviteURL={inviteURL} color="success"></UCDropdown>
@@ -88,15 +96,15 @@ export const InviteComponent = ({
 
 export const mapStateToProps = (state, ownProps) => {
   const id = ownProps.inviteID;
-  const subject = state.invites.invitesById[id].subject
+  const subject = state.invites.invitesById[id].subject;
   const sender = state.invites.invitesById[id].sender_id;
-
-  return {subject, sender};
+  const isJoinRequest = state.invites.invitesById[id].isJoinRequest;
+  return {subject, isJoinRequest, sender};
 };
 
-// const mapDispatchToProps = dispatch => bindActionCreators({
-//   handleUpdates
-// }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({
+  toggleProperty
+}, dispatch)
 
-export default connect(mapStateToProps, null)(InviteComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(InviteComponent);
 // export default InviteComponent;

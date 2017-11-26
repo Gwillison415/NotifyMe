@@ -1,15 +1,15 @@
-import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_JOIN, RESET_JSON, CLEAR_DATA, } from '../actions'
-const initialState2 = {
-  ids: [],
-  invites: [],
-  invitesById: {},
-  fetchingInvites: true,
-  statsObj: {
-    read: 0,
-    unread: 0,
-    duplicates: 0
-  }
-}
+import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_PROP, RESET_JSON, CLEAR_DATA, } from '../actions'
+// const initialState2 = {
+//   ids: [],
+//   invites: [],
+//   invitesById: {},
+//   fetchingInvites: true,
+//   statsObj: {
+//     read: 0,
+//     unread: 0,
+//     duplicates: 0
+//   }
+// }
 const initialState = {
   ids: [],
   invites: [],
@@ -72,7 +72,7 @@ let state = incomingState
         state.invitesById[invite.sig_id].status = invite.status;
         state.invitesById[invite.sig_id].vector = invite.vector;
         state.invitesById[invite.sig_id].sig_id = invite.sig_id;
-        state.invitesById[invite.sig_id].percentComplete = 0;
+        state.invitesById[invite.sig_id].invite_time = invite.invite_time;
       }
 
     } else {
@@ -99,6 +99,7 @@ let state = incomingState
       state.invitesById[invite.sig_id].status = invite.status;
       state.invitesById[invite.sig_id].vector = invite.vector;
       state.invitesById[invite.sig_id].sig_id = invite.sig_id;
+      state.invitesById[invite.sig_id].invite_time = invite.invite_time;
 
     }
     state.statsObj.percentComplete = 1 - state.statsObj.unread / (state.statsObj.unread + state.statsObj.read);
@@ -119,10 +120,10 @@ export default(state = initialState, action) => {
         fetchingInvites: false,
         // invites: action.invites,
       }
-    case TOGGLE_JOIN:
+    case TOGGLE_PROP:
       return {
         ...state,
-        invites: toggleProperty(state.invites, action.invite, "someprop")
+        invites: toggleObjectPropertImmutably(state.invitesById, action.invite, "isJoinRequest")
       }
     case UPDATE_JSON:
     console.log('UPDATE_JSON', initialState);
@@ -131,14 +132,17 @@ export default(state = initialState, action) => {
     console.log('RESET_JSON', initialState);
       return createState(action.response.invites);
     case CLEAR_DATA:
-      console.log("2", initialState2, '1', initialState);
-      return initialState2;
+
+      return initialState;
     default:
       return state
   }
 }
-
-function toggleProperty(invites, invite, property) {
+function toggleObjectPropertImmutably(invite, property) {
+  //Object.assign(invite, !invite[property])
+  invite[property] = !invite[property]
+}
+function toggleArrayPropertyImmutably(invites, invite, property) {
   console.log(property);
   const index = invites.indexOf(invite)
   return [

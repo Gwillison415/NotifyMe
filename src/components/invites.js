@@ -1,6 +1,8 @@
 import React from 'react'
 import {InviteComponent} from './invite';
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import { clearData} from '../actions'
 
 import {Card, CardDeck, Container, Col, Row} from 'reactstrap';
 
@@ -26,11 +28,33 @@ export const InvitesComponent = ({invites, invitesById, ids}) => {
 
     if (invitesById[id].status === "read") {
       invitations[0].push(<Card key={idx}>
-        <InviteComponent inviteID={invitesById[id].invite_id} sender={invitesById[id].sender_id} inviteMsg={invitesById[id].invite} vector={invitesById[id].vector} subject={invitesById[id].subject} status={invitesById[id].status} sig_id={invitesById[id].sig_id} inviteSelected={invitesById[id].selected} inviteURL={invitesById[id].url} inviteTime={invitesById[id].invite_time} invite={invitesById[id]} isJoinRequest={invitesById[id].isJoinRequest}/>
+        <InviteComponent inviteID={invitesById[id].invite_id}
+           sender={invitesById[id].sender_id}
+            inviteMsg={invitesById[id].invite}
+             vector={invitesById[id].vector}
+              subject={invitesById[id].subject}
+               status={invitesById[id].status}
+                sig_id={invitesById[id].sig_id}
+                 inviteSelected={invitesById[id].selected}
+                  inviteURL={invitesById[id].url}
+                   inviteTime={invitesById[id].invite_time}
+                    invite={invitesById[id]}
+                     isJoinRequest={invitesById[id].isJoinRequest}/>
       </Card>)
     } else {
       invitations[1].push(<Card key={idx}>
-        <InviteComponent inviteID={invitesById[id].invite_id} sender={invitesById[id].sender_id} subject={invitesById[id].subject} inviteMsg={invitesById[id].invite} vector={invitesById[id].vector} status={invitesById[id].status} sig_id={invitesById[id].sig_id} inviteSelected={invitesById[id].selected} inviteURL={invitesById[id].url} inviteTime={invitesById[id].invite_time} invite={invitesById[id]} isJoinRequest={invitesById[id].isJoinRequest}/>
+        <InviteComponent inviteID={invitesById[id].invite_id}
+           sender={invitesById[id].sender_id}
+            subject={invitesById[id].subject}
+             inviteMsg={invitesById[id].invite}
+              vector={invitesById[id].vector}
+               status={invitesById[id].status}
+                sig_id={invitesById[id].sig_id}
+                 inviteSelected={invitesById[id].selected}
+                  inviteURL={invitesById[id].url}
+                   inviteTime={invitesById[id].invite_time}
+                    invite={invitesById[id]}
+                     isJoinRequest={invitesById[id].isJoinRequest}/>
       </Card>)
     };
 
@@ -66,8 +90,9 @@ export const mapStateToProps = (state, ownProps) => {
 
   return {invites, ids, invitesById};
 };
+const mapDispatchToProps = dispatch => bindActionCreators({clearData}, dispatch)
 
-export default connect(mapStateToProps, null)(InvitesComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(InvitesComponent);
 // export default InvitesComponent
 
 // let invitations = [[], []]
