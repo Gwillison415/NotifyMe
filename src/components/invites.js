@@ -7,23 +7,10 @@ import { clearData} from '../actions'
 import {Card, CardDeck, Container, Col, Row} from 'reactstrap';
 
 export const InvitesComponent = ({invites, invitesById, ids}) => {
-  console.log(ids);
   let unreadInvitations = [];
   let readInvitations = [];
 
-  // invites.forEach((invite, idx) => {
-  //
-  //   if (invite.status === "read") {
-  //     invitations[0].push(<Card key={idx}>
-  //       <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} inviteMsg={invite.invite} vector={invite.vector} subject={invite.subject} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteURL={invite.url} inviteTime={invite.invite_time} invite={invite} isJoinRequest={invite.isJoinRequest}/>
-  //     </Card>)
-  //   } else {
-  //     invitations[1].push(<Card key={idx}>
-  //       <InviteComponent inviteID={invite.invite_id} sender={invite.sender_id} subject={invite.subject} inviteMsg={invite.invite} vector={invite.vector} status={invite.status} sig_id={invite.sig_id} inviteSelected={invite.selected} inviteURL={invite.url} inviteTime={invite.invite_time} invite={invite} isJoinRequest={invite.isJoinRequest}/>
-  //     </Card>)
-  //   };
-  //
-  // })
+  
 
   ids.forEach((id, idx) => {
 

@@ -21,6 +21,7 @@ let state = incomingState
   json.forEach((invite) => {
     //parse the invite message for truly relevant info given limited 'real estate'
     let subject = invite.invite.match(/\[[^\]]+\]/, 'g')
+    subject = subject[0].slice(1, subject[0].length - 1)
     //pull string out of RegExp OBJ - causes unexpected behavior -
     //  abandoning for now although it would have be cleaner.
     // subject = subject[0].slice(1, subject[0].length - 1)
@@ -32,38 +33,38 @@ let state = incomingState
   // we need to keep a single copy of all messages that have yet to be joined and only one.
     if (state.invitesById.hasOwnProperty(invite.sig_id)) {
 
-      if (state.invitesById[invite.sig_id].subject === subject[0].slice(1, subject[0].length - 1)) {
+      if (state.invitesById[invite.sig_id].subject === subject) {
         // only thing I really want to do with dupes is count them so I can potentially order them by #people who sent them -
         // this possible "high priority" indication on a dashboard represents potentially useful data to cache on the client
-        state.statsObj.duplicates = state.statsObj.duplicates + 1
+        state.statsObj.duplicates++
         return;
       } else {
-        console.log('invite old entry', state.invitesById[invite.sig_id].subject);
         if (invite.status === "unread") {
           state.statsObj.unread++;
         } else {
           state.statsObj.read++;
         }
-        // write new entry into state tree
-        state.invites.push(Object.assign(invite, {
-          subject: subject[0].slice(1, subject[0].length - 1),
-          url: url[0],
-          isJoinRequest
-        }))
 
 
+        //write object into invites array - deprecated
+        // state.invites.push(Object.assign(invite, {
+        //   subject: subject[0].slice(1, subject[0].length - 1),
+        //   url: url[0],
+        //   isJoinRequest
+        // }))
+
+          // write new entry into state tree
         state.invitesById[invite.sig_id] = {};
         state.invitesById[invite.sig_id].invite = invite.invite;
         state.invitesById[invite.sig_id].sender_id = invite.sender_id;
-        state.invitesById[invite.sig_id].subject = invite.subject;
-        state.invitesById[invite.sig_id].url = invite.url;
+        state.invitesById[invite.sig_id].subject = subject;
+        state.invitesById[invite.sig_id].url = url;
         state.invitesById[invite.sig_id].invite_id = invite.invite_id;
-        state.invitesById[invite.sig_id].isJoinRequest = invite.isJoinRequest;
+        state.invitesById[invite.sig_id].isJoinRequest = isJoinRequest;
         state.invitesById[invite.sig_id].status = invite.status;
         state.invitesById[invite.sig_id].vector = invite.vector;
         state.invitesById[invite.sig_id].sig_id = invite.sig_id;
         state.invitesById[invite.sig_id].invite_time = invite.invite_time;
-        console.log('invite old entry 2', state.invitesById[invite.sig_id].subject);
       }
 
     } else {
@@ -73,11 +74,14 @@ let state = incomingState
       } else {
         state.statsObj["read"]++;
       }
-      state.invites.push(Object.assign(invite, {
-        subject: subject[0].slice(1, subject[0].length - 1),
-        url: url[0],
-        isJoinRequest
-      }))
+      //write object into invites array - deprecated
+      // state.invites.push(Object.assign(invite, {
+      //   subject: subject[0].slice(1, subject[0].length - 1),
+      //   url: url[0],
+      //   isJoinRequest
+      // }))
+
+        // re-write new entry from same sig_id into state tree
       state.ids = state.ids.concat(invite.sig_id);
       state.invitesById[invite.sig_id] = {};
       state.invitesById[invite.sig_id].invite = invite.invite;
@@ -85,13 +89,11 @@ let state = incomingState
       state.invitesById[invite.sig_id].subject = invite.subject;
       state.invitesById[invite.sig_id].url = invite.url;
       state.invitesById[invite.sig_id].invite_id = invite.invite_id;
-      state.invitesById[invite.sig_id].isJoinRequest = invite.isJoinRequest;
+      state.invitesById[invite.sig_id].isJoinRequest = isJoinRequest;
       state.invitesById[invite.sig_id].status = invite.status;
       state.invitesById[invite.sig_id].vector = invite.vector;
       state.invitesById[invite.sig_id].sig_id = invite.sig_id;
       state.invitesById[invite.sig_id].invite_time = invite.invite_time;
-
-      console.log('invite NEW entry', state.invitesById[invite.sig_id].subject);
     }
     state.statsObj.percentComplete = 1 - state.statsObj.unread / (state.statsObj.unread + state.statsObj.read);
   });
@@ -111,7 +113,7 @@ const initialState = {
     duplicates: 0
   }
 }
-export default(state = initialState, action) => {
+const inviteReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case INVITES_REQUEST_STARTED:
@@ -155,3 +157,5 @@ function toggleArrayPropertyImmutably(invites, invite, property) {
     ...invites.slice(index + 1)
   ];
 }
+
+export default inviteReducer;

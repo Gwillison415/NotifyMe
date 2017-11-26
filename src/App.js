@@ -17,12 +17,10 @@ import NavToolBar from './components/navbar';
 const P = Particles;
 
 class App extends Component {
-  // the would be normal method to accept incoming data upon mounting of main component
-  // I'd probably use an render-if logic if it was a multi page app
+  // this would be normal method to accept incoming data upon mounting of main component
+  // I'd probably use an render-if logic / package if it was a multi page app
   componentDidMount() {
-    //     particlesJS.load('particles-js', 'assets/particles.json', function() {
-    //   console.log('callback - particles.js config loaded');
-    // });
+
     this.props.getInvites()
   }
   render() {
