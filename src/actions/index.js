@@ -43,6 +43,7 @@ such that there is less disruption / bugs / thinking as you move between environ
 export const handleUpdates = () => {
   // mockJsonUpdate = await mockJsonUpdate;
   return async (dispatch) => {
+    dispatch({type: CLEAR_DATA})
     dispatch({type: UPDATE_JSON, response: mockJsonUpdate, isUpdate: true})
     dispatch({type: INVITES_REQUEST_SUCCESS})
   }
@@ -51,6 +52,7 @@ export const handleUpdates = () => {
 export const returnToInitialInvites = () => {
   // mockJson = await mockJson;
   return async (dispatch) => {
+    dispatch({type: CLEAR_DATA})
     dispatch({type: RESET_JSON, response: mockJson, isUpdate: true})
     dispatch({type: INVITES_REQUEST_SUCCESS})
   }

@@ -10,17 +10,7 @@ import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_PR
 //     duplicates: 0
 //   }
 // }
-const initialState = {
-  ids: [],
-  invites: [],
-  invitesById: {},
-  fetchingInvites: true,
-  statsObj: {
-    read: 0,
-    unread: 0,
-    duplicates: 0
-  }
-}
+
 
 let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
 let joinRequest = new RegExp(/\bjoin Situation\b/)
@@ -45,10 +35,10 @@ let state = incomingState
       if (state.invitesById[invite.sig_id].subject === subject[0].slice(1, subject[0].length - 1)) {
         // only thing I really want to do with dupes is count them so I can potentially order them by #people who sent them -
         // this possible "high priority" indication on a dashboard represents potentially useful data to cache on the client
-        state.statsObj.duplicates++
+        state.statsObj.duplicates = state.statsObj.duplicates + 1
         return;
       } else {
-        console.log('invite old entry', invite.status);
+        console.log('invite old entry', state.invitesById[invite.sig_id].subject);
         if (invite.status === "unread") {
           state.statsObj.unread++;
         } else {
@@ -60,8 +50,8 @@ let state = incomingState
           url: url[0],
           isJoinRequest
         }))
-  console.log('inside old invite');
-        state.ids = state.ids.concat(invite.sig_id);
+
+
         state.invitesById[invite.sig_id] = {};
         state.invitesById[invite.sig_id].invite = invite.invite;
         state.invitesById[invite.sig_id].sender_id = invite.sender_id;
@@ -73,6 +63,7 @@ let state = incomingState
         state.invitesById[invite.sig_id].vector = invite.vector;
         state.invitesById[invite.sig_id].sig_id = invite.sig_id;
         state.invitesById[invite.sig_id].invite_time = invite.invite_time;
+        console.log('invite old entry 2', state.invitesById[invite.sig_id].subject);
       }
 
     } else {
@@ -87,7 +78,6 @@ let state = incomingState
         url: url[0],
         isJoinRequest
       }))
-      console.log('inside new invite');
       state.ids = state.ids.concat(invite.sig_id);
       state.invitesById[invite.sig_id] = {};
       state.invitesById[invite.sig_id].invite = invite.invite;
@@ -101,6 +91,7 @@ let state = incomingState
       state.invitesById[invite.sig_id].sig_id = invite.sig_id;
       state.invitesById[invite.sig_id].invite_time = invite.invite_time;
 
+      console.log('invite NEW entry', state.invitesById[invite.sig_id].subject);
     }
     state.statsObj.percentComplete = 1 - state.statsObj.unread / (state.statsObj.unread + state.statsObj.read);
   });
@@ -109,6 +100,17 @@ let state = incomingState
   };
 }
 
+const initialState = {
+  ids: [],
+  invites: [],
+  invitesById: {},
+  fetchingInvites: true,
+  statsObj: {
+    read: 0,
+    unread: 0,
+    duplicates: 0
+  }
+}
 export default(state = initialState, action) => {
 
   switch (action.type) {
@@ -127,7 +129,7 @@ export default(state = initialState, action) => {
       }
     case UPDATE_JSON:
     console.log('UPDATE_JSON', initialState);
-      return createState(action.response.invites);
+      return createState(action.response.invites, undefined);
     case RESET_JSON:
     console.log('RESET_JSON', initialState);
       return createState(action.response.invites);

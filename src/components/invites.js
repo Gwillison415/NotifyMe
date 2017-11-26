@@ -8,7 +8,8 @@ import {Card, CardDeck, Container, Col, Row} from 'reactstrap';
 
 export const InvitesComponent = ({invites, invitesById, ids}) => {
   console.log(ids);
-  let invitations = [[], []]
+  let unreadInvitations = [];
+  let readInvitations = [];
 
   // invites.forEach((invite, idx) => {
   //
@@ -27,7 +28,7 @@ export const InvitesComponent = ({invites, invitesById, ids}) => {
   ids.forEach((id, idx) => {
 
     if (invitesById[id].status === "read") {
-      invitations[0].push(<Card key={idx}>
+      readInvitations.push(<Card key={idx}>
         <InviteComponent inviteID={invitesById[id].invite_id}
            sender={invitesById[id].sender_id}
             inviteMsg={invitesById[id].invite}
@@ -42,7 +43,7 @@ export const InvitesComponent = ({invites, invitesById, ids}) => {
                      isJoinRequest={invitesById[id].isJoinRequest}/>
       </Card>)
     } else {
-      invitations[1].push(<Card key={idx}>
+      unreadInvitations.push(<Card key={idx}>
         <InviteComponent inviteID={invitesById[id].invite_id}
            sender={invitesById[id].sender_id}
             subject={invitesById[id].subject}
@@ -68,14 +69,14 @@ export const InvitesComponent = ({invites, invitesById, ids}) => {
             pull: 1
           }}>
           <h2 className="text-warning">Unread Messages</h2>
-          {invitations[1]}
+          {unreadInvitations}
         </Col>
         <Col sm="6" xs={{
             size: 12,
             pull: 1
           }}>
           <h2 className="text-info">Read Messages</h2>
-          {invitations[0]}
+          {readInvitations}
         </Col>
       </Row>
     </CardDeck>
@@ -86,9 +87,9 @@ export const InvitesComponent = ({invites, invitesById, ids}) => {
 export const mapStateToProps = (state, ownProps) => {
   const ids = state.invites.ids
   const invitesById = state.invites.invitesById;
-  const invites = state.invites.invites
+  // const invites = state.invites.invites
 
-  return {invites, ids, invitesById};
+  return { ids, invitesById};
 };
 const mapDispatchToProps = dispatch => bindActionCreators({clearData}, dispatch)
 
