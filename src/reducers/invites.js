@@ -1,15 +1,15 @@
 import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_PROP, RESET_JSON, CLEAR_DATA, } from '../actions'
-// const initialState2 = {
-//   ids: [],
-//   invites: [],
-//   invitesById: {},
-//   fetchingInvites: true,
-//   statsObj: {
-//     read: 0,
-//     unread: 0,
-//     duplicates: 0
-//   }
-// }
+const initialState2 = {
+  ids: [],
+  invites: [],
+  invitesById: {},
+  fetchingInvites: true,
+  statsObj: {
+    read: 0,
+    unread: 0,
+    duplicates: 0
+  }
+}
 
 
 let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
@@ -46,7 +46,7 @@ let state = incomingState
         }
 
 
-        //write object into invites array - deprecated
+        //write object into invites array - deprecated - not using invites array at all
         // state.invites.push(Object.assign(invite, {
         //   subject: subject[0].slice(1, subject[0].length - 1),
         //   url: url[0],
@@ -137,7 +137,7 @@ const inviteReducer = (state = initialState, action) => {
       return createState(action.response.invites);
     case CLEAR_DATA:
 
-      return initialState;
+      return initialState2;
     default:
       return state
   }
