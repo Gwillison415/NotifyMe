@@ -9,6 +9,7 @@ import {Container} from 'reactstrap';
 import {Particles} from 'react-particles-js';
 import {particlesConfig} from './particlesjs-config';
 
+
 import InvitesComponent from './components/invites';
 
 import NavToolBar from './components/navbar';
@@ -17,8 +18,10 @@ import NavToolBar from './components/navbar';
 const P = Particles;
 
 class App extends Component {
+
   // this would be normal method to accept incoming data upon mounting of main component
   // I'd probably use an render-if logic / package if it was a multi page app
+
   componentDidMount() {
 
     this.props.getInvites()
