@@ -1,4 +1,4 @@
-import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_JOIN, RESET_JSON, CLEAR_DATA, } from '../actions'
+import {INVITES_REQUEST_STARTED, INVITES_REQUEST_SUCCESS, UPDATE_JSON, TOGGLE_PROP, RESET_JSON, CLEAR_DATA, } from '../actions'
 const initialState2 = {
   ids: [],
   invites: [],
@@ -10,6 +10,7 @@ const initialState2 = {
     duplicates: 0
   }
 }
+
 const initialState = {
   ids: [],
   invites: [],
@@ -25,12 +26,24 @@ const initialState = {
 let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
 let joinRequest = new RegExp(/\bjoin Situation\b/)
 
-function createState(json, incomingState = initialState, isUpdate = false) {
-let state = incomingState
+function createState(json, incomingState = {
+  ids: [],
+  invites: [],
+  invitesById: {},
+  fetchingInvites: true,
+  statsObj: {
+    read: 0,
+    unread: 0,
+    duplicates: 0
+  }
+}, isUpdate = false) {
+let state = incomingState;
+console.log(state, 'this should be reset after clear');
 
   json.forEach((invite) => {
     //parse the invite message for truly relevant info given limited 'real estate'
     let subject = invite.invite.match(/\[[^\]]+\]/, 'g')
+    subject = subject[0].slice(1, subject[0].length - 1)
     //pull string out of RegExp OBJ - causes unexpected behavior -
     //  abandoning for now although it would have be cleaner.
     // subject = subject[0].slice(1, subject[0].length - 1)
@@ -42,37 +55,43 @@ let state = incomingState
   // we need to keep a single copy of all messages that have yet to be joined and only one.
     if (state.invitesById.hasOwnProperty(invite.sig_id)) {
 
-      if (state.invitesById[invite.sig_id].subject === subject[0].slice(1, subject[0].length - 1)) {
+      if (state.invitesById[invite.sig_id].subject === subject) {
         // only thing I really want to do with dupes is count them so I can potentially order them by #people who sent them -
         // this possible "high priority" indication on a dashboard represents potentially useful data to cache on the client
-        state.statsObj.duplicates++
-        return;
+
+
+        state.statsObj = Object.assign(state.statsObj, {duplicates: state.statsObj.duplicates + 1 })
+
+        // state.statsObj.duplicates =  state.statsObj.duplicates + 1
+         return;
       } else {
-        console.log('invite old entry', invite.status);
         if (invite.status === "unread") {
-          state.statsObj.unread++;
+          state.statsObj = Object.assign(state.statsObj, {unread: state.statsObj.unread + 1 })
+          ;
         } else {
-          state.statsObj.read++;
+            state.statsObj = Object.assign(state.statsObj, {read: state.statsObj.read + 1 })
         }
-        // write new entry into state tree
-        state.invites.push(Object.assign(invite, {
-          subject: subject[0].slice(1, subject[0].length - 1),
-          url: url[0],
-          isJoinRequest
-        }))
-  console.log('inside old invite');
-        state.ids = state.ids.concat(invite.sig_id);
+      console.log('on line 64', state);
+
+        //write object into invites array - deprecated - not using invites array at all
+        // state.invites.push(Object.assign(invite, {
+        //   subject: subject[0].slice(1, subject[0].length - 1),
+        //   url: url[0],
+        //   isJoinRequest
+        // }))
+
+          // write new entry into state tree
         state.invitesById[invite.sig_id] = {};
         state.invitesById[invite.sig_id].invite = invite.invite;
         state.invitesById[invite.sig_id].sender_id = invite.sender_id;
-        state.invitesById[invite.sig_id].subject = invite.subject;
-        state.invitesById[invite.sig_id].url = invite.url;
+        state.invitesById[invite.sig_id].subject = subject;
+        state.invitesById[invite.sig_id].url = url[0];
         state.invitesById[invite.sig_id].invite_id = invite.invite_id;
-        state.invitesById[invite.sig_id].isJoinRequest = invite.isJoinRequest;
+        state.invitesById[invite.sig_id].isJoinRequest = isJoinRequest;
         state.invitesById[invite.sig_id].status = invite.status;
         state.invitesById[invite.sig_id].vector = invite.vector;
         state.invitesById[invite.sig_id].sig_id = invite.sig_id;
-        state.invitesById[invite.sig_id].percentComplete = 0;
+        state.invitesById[invite.sig_id].invite_time = invite.invite_time;
       }
 
     } else {
@@ -82,24 +101,26 @@ let state = incomingState
       } else {
         state.statsObj["read"]++;
       }
-      state.invites.push(Object.assign(invite, {
-        subject: subject[0].slice(1, subject[0].length - 1),
-        url: url[0],
-        isJoinRequest
-      }))
-      console.log('inside new invite');
+      //write object into invites array - deprecated
+      // state.invites.push(Object.assign(invite, {
+      //   subject: subject[0].slice(1, subject[0].length - 1),
+      //   url: url[0],
+      //   isJoinRequest
+      // }))
+
+        // re-write new entry from same sig_id into state tree
       state.ids = state.ids.concat(invite.sig_id);
       state.invitesById[invite.sig_id] = {};
       state.invitesById[invite.sig_id].invite = invite.invite;
       state.invitesById[invite.sig_id].sender_id = invite.sender_id;
       state.invitesById[invite.sig_id].subject = invite.subject;
-      state.invitesById[invite.sig_id].url = invite.url;
+      state.invitesById[invite.sig_id].url = url[0];
       state.invitesById[invite.sig_id].invite_id = invite.invite_id;
-      state.invitesById[invite.sig_id].isJoinRequest = invite.isJoinRequest;
+      state.invitesById[invite.sig_id].isJoinRequest = isJoinRequest;
       state.invitesById[invite.sig_id].status = invite.status;
       state.invitesById[invite.sig_id].vector = invite.vector;
       state.invitesById[invite.sig_id].sig_id = invite.sig_id;
-
+      state.invitesById[invite.sig_id].invite_time = invite.invite_time;
     }
     state.statsObj.percentComplete = 1 - state.statsObj.unread / (state.statsObj.unread + state.statsObj.read);
   });
@@ -108,7 +129,8 @@ let state = incomingState
   };
 }
 
-export default(state = initialState, action) => {
+
+const inviteReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case INVITES_REQUEST_STARTED:
@@ -119,26 +141,29 @@ export default(state = initialState, action) => {
         fetchingInvites: false,
         // invites: action.invites,
       }
-    case TOGGLE_JOIN:
+    case TOGGLE_PROP:
       return {
         ...state,
-        invites: toggleProperty(state.invites, action.invite, "someprop")
+        invites: toggleObjectPropertImmutably(state.invitesById, action.invite, "isJoinRequest")
       }
     case UPDATE_JSON:
     console.log('UPDATE_JSON', initialState);
-      return createState(action.response.invites);
+      return createState(action.response.invites, state);
     case RESET_JSON:
     console.log('RESET_JSON', initialState);
       return createState(action.response.invites);
     case CLEAR_DATA:
-      console.log("2", initialState2, '1', initialState);
-      return initialState2;
+  console.log("clear data INIT2",  initialState);
+      return {...initialState};
     default:
       return state
   }
 }
-
-function toggleProperty(invites, invite, property) {
+function toggleObjectPropertImmutably(invite, property) {
+  //Object.assign(invite, !invite[property])
+  invite[property] = !invite[property]
+}
+function toggleArrayPropertyImmutably(invites, invite, property) {
   console.log(property);
   const index = invites.indexOf(invite)
   return [
@@ -149,3 +174,5 @@ function toggleProperty(invites, invite, property) {
     ...invites.slice(index + 1)
   ];
 }
+
+export default inviteReducer;

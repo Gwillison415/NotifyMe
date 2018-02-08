@@ -78,8 +78,7 @@ export default class NOTIFY_API {
         nd === 1
         ? ""
         : "s"));
-    if (sd > 0)
-      out.push(sd + "S" + (
+    if (sd > 0)      out.push(sd + "Second" + (
         sd === 1
         ? ""
         : "s"));

@@ -5,6 +5,7 @@
   "homepage": ".",
   "dependencies": {
     "@types/lodash.clonedeep": "^4.5.3",
+    "enzyme-to-json": "^3.2.2",
     "lodash.clonedeep": "^4.5.0",
     "moment": "^2.9.xx",
     "react": "^16.1.1",
@@ -28,6 +29,8 @@
   },
   "devDependencies": {
     "babel-jest": "^21.2.0",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
     "jest": "^21.2.1",
     "react-addons-test-utils": "^15.6.2",
     "redux-devtools": "^3.4.1",

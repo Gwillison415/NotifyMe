@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {returnToInitialInvites, clearData, } from '../actions'
+import {returnToInitialInvites, clearData} from '../actions'
 import {
   Navbar,
   NavbarBrand,
@@ -24,23 +24,24 @@ class NavToolBar extends React.Component {
     let percentUnread = Math.round((1 - this.props.percentComplete) * 100)
 
     return (<div>
-      <Navbar color="blue" light="light" expand="md">
-        <NavbarBrand href="/">Duplicate Messages: {`${this.props.duplicates}`}</NavbarBrand>
+      <Navbar color="blue" light={true} expand="md">
+        <NavbarBrand className="text-warning" href="/">Duplicate Messages: {`${this.props.duplicates}`}</NavbarBrand>
         <Col sm="9" md={{
             size: 6,
             offset: 1
           }}>
-          <Progress multi="multi">
-            <Progress bar="bar" color="info" value={`${percentRead}`}>
+          <Progress multi={true}>
+
+            <Progress bar={true} color="warning" value={`${percentUnread}`}>
+              {`${percentUnread}%`}</Progress>
+            <Progress bar={true} color="info" value={`${percentRead}`}>
               {`${percentRead}%`}
             </Progress>
-            <Progress bar="bar" color="warning" value={`${percentUnread}`}>
-              {`${percentUnread}%`}</Progress>
 
           </Progress>
         </Col>
         <UncontrolledDropdown size="small">
-          <DropdownToggle caret="caret" id="branchInput">
+          <DropdownToggle caret={true} id="branchInput">
             Toggle Me
           </DropdownToggle>
           <DropdownMenu >
@@ -63,7 +64,7 @@ class NavToolBar extends React.Component {
                 this.props.clearData()
               }}>
               Clear Data</DropdownItem>
-            <DropdownItem divider="divider"/>
+              <DropdownItem divider={true}/>
             <DropdownItem >
               <a href="https://github.com/Gwillison415/NotifyMe">Github Repo</a>
             </DropdownItem>
@@ -79,15 +80,12 @@ class NavToolBar extends React.Component {
 export const mapStateToProps = (state, ownProps) => {
   let invites = state.invites.invites
   let statsObj = state.invites.statsObj;
-  return {
-    statsObj,
-    invites
-  };
+  return {statsObj, invites};
 }
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleUpdates,
   returnToInitialInvites,
-  clearData,
+  clearData
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavToolBar);
