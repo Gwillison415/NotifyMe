@@ -8,18 +8,15 @@ import {getInvites} from './actions'
 import {Container} from 'reactstrap';
 import Particles from 'react-particles-js';
 
-
 import InvitesComponent from './components/invites';
 
 import NavToolBar from './components/navbar';
 
 class App extends Component {
-// the would be normal method to accept incoming data upon mounting of main component
-// I'd probably use an render-if logic if it was a multi page app
+  // the would be normal method to accept incoming data upon mounting of main component
+  // I'd probably use an render-if logic if it was a multi page app
   componentDidMount() {
-//     particlesJS.load('particles-js', 'assets/particles.json', function() {
-//   console.log('callback - particles.js config loaded');
-// });
+
     this.props.getInvites()
   }
   render() {
@@ -36,11 +33,8 @@ class App extends Component {
         </header>
 
       </div>
-      <NavToolBar percentComplete={this.props.invites.statsObj.percentComplete} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read} duplicates={this.props.duplicates}>
-
-
-      </NavToolBar>
-{/* <Particles></Particles> */}
+      <NavToolBar percentComplete={this.props.invites.statsObj.percentComplete} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read} duplicates={this.props.duplicates}></NavToolBar>
+      {/* <Particles></Particles> */}
       <InvitesComponent invites={this.props.invites} invitesById={this.props.invitesById} ids={this.props.ids}></InvitesComponent>
 
     </Container>);
