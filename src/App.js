@@ -26,18 +26,17 @@ class App extends Component {
   render() {
     return (<Container>
       <P params={{
-        particles: particlesConfig.particles,
-        interactivity : particlesConfig.interactivity,
-       }} style={{
-         position: "fixed",
-         "zIndex": 0,
-         background: "#2e3250",
-         top: 0,
-         left: 0,
-         width: "100%",
-         height: "100%"
-       }
-     }/>
+          particles: particlesConfig.particles,
+          interactivity: particlesConfig.interactivity
+        }} style={{
+          position: "fixed",
+          "zIndex" : 0,
+          background: "#2e3250",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%"
+        }}/>
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Built With React & Redux</h1>
@@ -49,20 +48,21 @@ class App extends Component {
         </header>
 
       </div>
-      <NavToolBar percentComplete={this.props.invites.statsObj.percentComplete} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read} duplicates={this.props.duplicates}>
+      <NavToolBar percentComplete={this.props.invites.statsObj.percentComplete} unread={this.props.invites.statsObj.unread} read={this.props.invites.statsObj.read} duplicates={this.props.duplicates}></NavToolBar>
 
-      </NavToolBar>
+      <InvitesComponent invites={this.props.invites} invitesById={this.props.invitesById} ids={this.props.ids}></InvitesComponent>
 
-
-
-    <InvitesComponent invites={this.props.invites} invitesById={this.props.invitesById} ids={this.props.ids}></InvitesComponent>
-
-  </Container>); } } const mapStateToProps = state => {
-    const invites = state.invites
-    const duplicates = state.invites.statsObj.duplicates
-    const percentComplete = state.invites.statsObj.percentComplete
-    return ({invites, duplicates, percentComplete})
+    </Container>);
   }
-  const mapDispatchToProps = dispatch => bindActionCreators({getInvites}, dispatch)
+}
+const mapStateToProps = state => {
+  const invites = state.invites
+  const duplicates = state.invites.statsObj.duplicates
+  const percentComplete = state.invites.statsObj.percentComplete
+  return ({invites, duplicates, percentComplete})
+}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getInvites
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

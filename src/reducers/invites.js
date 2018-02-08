@@ -11,12 +11,34 @@ const initialState2 = {
   }
 }
 
+const initialState = {
+  ids: [],
+  invites: [],
+  invitesById: {},
+  fetchingInvites: true,
+  statsObj: {
+    read: 0,
+    unread: 0,
+    duplicates: 0
+  }
+}
 
 let urlRegex = new RegExp(/https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/)
 let joinRequest = new RegExp(/\bjoin Situation\b/)
 
-function createState(json, incomingState = initialState, isUpdate = false) {
-let state = incomingState
+function createState(json, incomingState = {
+  ids: [],
+  invites: [],
+  invitesById: {},
+  fetchingInvites: true,
+  statsObj: {
+    read: 0,
+    unread: 0,
+    duplicates: 0
+  }
+}, isUpdate = false) {
+let state = incomingState;
+console.log(state, 'this should be reset after clear');
 
   json.forEach((invite) => {
     //parse the invite message for truly relevant info given limited 'real estate'
@@ -36,15 +58,20 @@ let state = incomingState
       if (state.invitesById[invite.sig_id].subject === subject) {
         // only thing I really want to do with dupes is count them so I can potentially order them by #people who sent them -
         // this possible "high priority" indication on a dashboard represents potentially useful data to cache on the client
-        state.statsObj.duplicates++
-        return;
+
+
+        state.statsObj = Object.assign(state.statsObj, {duplicates: state.statsObj.duplicates + 1 })
+
+        // state.statsObj.duplicates =  state.statsObj.duplicates + 1
+         return;
       } else {
         if (invite.status === "unread") {
-          state.statsObj.unread++;
+          state.statsObj = Object.assign(state.statsObj, {unread: state.statsObj.unread + 1 })
+          ;
         } else {
-          state.statsObj.read++;
+            state.statsObj = Object.assign(state.statsObj, {read: state.statsObj.read + 1 })
         }
-
+      console.log('on line 64', state);
 
         //write object into invites array - deprecated - not using invites array at all
         // state.invites.push(Object.assign(invite, {
@@ -58,7 +85,7 @@ let state = incomingState
         state.invitesById[invite.sig_id].invite = invite.invite;
         state.invitesById[invite.sig_id].sender_id = invite.sender_id;
         state.invitesById[invite.sig_id].subject = subject;
-        state.invitesById[invite.sig_id].url = url;
+        state.invitesById[invite.sig_id].url = url[0];
         state.invitesById[invite.sig_id].invite_id = invite.invite_id;
         state.invitesById[invite.sig_id].isJoinRequest = isJoinRequest;
         state.invitesById[invite.sig_id].status = invite.status;
@@ -87,7 +114,7 @@ let state = incomingState
       state.invitesById[invite.sig_id].invite = invite.invite;
       state.invitesById[invite.sig_id].sender_id = invite.sender_id;
       state.invitesById[invite.sig_id].subject = invite.subject;
-      state.invitesById[invite.sig_id].url = invite.url;
+      state.invitesById[invite.sig_id].url = url[0];
       state.invitesById[invite.sig_id].invite_id = invite.invite_id;
       state.invitesById[invite.sig_id].isJoinRequest = isJoinRequest;
       state.invitesById[invite.sig_id].status = invite.status;
@@ -102,17 +129,7 @@ let state = incomingState
   };
 }
 
-const initialState = {
-  ids: [],
-  invites: [],
-  invitesById: {},
-  fetchingInvites: true,
-  statsObj: {
-    read: 0,
-    unread: 0,
-    duplicates: 0
-  }
-}
+
 const inviteReducer = (state = initialState, action) => {
 
   switch (action.type) {
@@ -131,13 +148,13 @@ const inviteReducer = (state = initialState, action) => {
       }
     case UPDATE_JSON:
     console.log('UPDATE_JSON', initialState);
-      return createState(action.response.invites, undefined);
+      return createState(action.response.invites, state);
     case RESET_JSON:
     console.log('RESET_JSON', initialState);
       return createState(action.response.invites);
     case CLEAR_DATA:
-
-      return initialState2;
+  console.log("clear data INIT2",  initialState);
+      return {...initialState};
     default:
       return state
   }

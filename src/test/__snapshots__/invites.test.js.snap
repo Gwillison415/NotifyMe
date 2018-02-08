@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Invites component should render a component with props as specified  1`] = `
+<Container
+  tag="div"
+>
+  <CardDeck
+    tag="div"
+    width="100%"
+  >
+    <Row
+      tag="div"
+    >
+      <Col
+        sm="6"
+        tag="div"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+        xs={
+          Object {
+            "pull": 1,
+            "size": 12,
+          }
+        }
+      >
+        <h2
+          className="text-warning"
+        >
+          Unread Messages
+        </h2>
+        <Card
+          key="3"
+          tag="div"
+        >
+          <Component
+            invite={
+              Object {
+                "invite": "The Owner has invited you to join Situation 49120 [No access to AWS account] Please follow this link to open Situation Room: http://www.moogsoft.com",
+                "invite_id": 4,
+                "invite_time": 1399192261,
+                "isJoinRequest": true,
+                "sender_id": "adrian",
+                "sig_id": 49120,
+                "status": "unread",
+                "subject": "No access to AWS account",
+                "url": "http://www.moogsoft.com",
+                "vector": "Internal",
+              }
+            }
+            inviteID={4}
+            inviteMsg="The Owner has invited you to join Situation 49120 [No access to AWS account] Please follow this link to open Situation Room: http://www.moogsoft.com"
+            inviteTime={1399192261}
+            inviteURL="http://www.moogsoft.com"
+            isJoinRequest={true}
+            sender="adrian"
+            sig_id={49120}
+            status="unread"
+            subject="No access to AWS account"
+            vector="Internal"
+          />
+        </Card>
+      </Col>
+      <Col
+        sm="6"
+        tag="div"
+        widths={
+          Array [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+          ]
+        }
+        xs={
+          Object {
+            "pull": 1,
+            "size": 12,
+          }
+        }
+      >
+        <h2
+          className="text-info"
+        >
+          Read Messages
+        </h2>
+        <Card
+          key="0"
+          tag="div"
+        >
+          <Component
+            invite={
+              Object {
+                "invite": "The Owner has invited you to join Situation 25121 [Mail system down] Please follow this link to open Situation Room: http://www.moogsoft.com",
+                "invite_id": 1,
+                "invite_time": 1398892261,
+                "isJoinRequest": true,
+                "sender_id": "jeff",
+                "sig_id": 25121,
+                "status": "read",
+                "subject": "Mail system down",
+                "url": "http://www.moogsoft.com",
+                "vector": "Internal",
+              }
+            }
+            inviteID={1}
+            inviteMsg="The Owner has invited you to join Situation 25121 [Mail system down] Please follow this link to open Situation Room: http://www.moogsoft.com"
+            inviteTime={1398892261}
+            inviteURL="http://www.moogsoft.com"
+            isJoinRequest={true}
+            sender="jeff"
+            sig_id={25121}
+            status="read"
+            subject="Mail system down"
+            vector="Internal"
+          />
+        </Card>
+        <Card
+          key="1"
+          tag="div"
+        >
+          <Component
+            invite={
+              Object {
+                "invite": "The Owner has invited you to join Situation 23951 [Slow access to Purchasing system] Please follow this link to open Situation Room: http://www.moogsoft.com",
+                "invite_id": 2,
+                "invite_time": 1398992261,
+                "isJoinRequest": true,
+                "sender_id": "andrew",
+                "sig_id": 23951,
+                "status": "read",
+                "subject": "Slow access to Purchasing system",
+                "url": "http://www.moogsoft.com",
+                "vector": "Email",
+              }
+            }
+            inviteID={2}
+            inviteMsg="The Owner has invited you to join Situation 23951 [Slow access to Purchasing system] Please follow this link to open Situation Room: http://www.moogsoft.com"
+            inviteTime={1398992261}
+            inviteURL="http://www.moogsoft.com"
+            isJoinRequest={true}
+            sender="andrew"
+            sig_id={23951}
+            status="read"
+            subject="Slow access to Purchasing system"
+            vector="Email"
+          />
+        </Card>
+        <Card
+          key="2"
+          tag="div"
+        >
+          <Component
+            invite={
+              Object {
+                "invite": "The Owner has invited you to join Situation 92394 [End-users reporting no service in London] Please follow this link to open Situation Room: http://www.moogsoft.com",
+                "invite_id": 3,
+                "invite_time": 1399092261,
+                "isJoinRequest": true,
+                "sender_id": "neil",
+                "sig_id": 92394,
+                "status": "read",
+                "subject": "End-users reporting no service in London",
+                "url": "http://www.moogsoft.com",
+                "vector": "Twitter",
+              }
+            }
+            inviteID={3}
+            inviteMsg="The Owner has invited you to join Situation 92394 [End-users reporting no service in London] Please follow this link to open Situation Room: http://www.moogsoft.com"
+            inviteTime={1399092261}
+            inviteURL="http://www.moogsoft.com"
+            isJoinRequest={true}
+            sender="neil"
+            sig_id={92394}
+            status="read"
+            subject="End-users reporting no service in London"
+            vector="Twitter"
+          />
+        </Card>
+        <Card
+          key="4"
+          tag="div"
+        >
+          <Component
+            invite={
+              Object {
+                "invite": "The Owner has invited you to join Situation 10293 [Mail intermittendly available] Please follow this link to open Situation Room: http://www.moogsoft.com",
+                "invite_id": 5,
+                "invite_time": 1399292261,
+                "isJoinRequest": true,
+                "sender_id": "mike",
+                "sig_id": 10293,
+                "status": "read",
+                "subject": "Mail intermittendly available",
+                "url": "http://www.moogsoft.com",
+                "vector": "Email",
+              }
+            }
+            inviteID={5}
+            inviteMsg="The Owner has invited you to join Situation 10293 [Mail intermittendly available] Please follow this link to open Situation Room: http://www.moogsoft.com"
+            inviteTime={1399292261}
+            inviteURL="http://www.moogsoft.com"
+            isJoinRequest={true}
+            sender="mike"
+            sig_id={10293}
+            status="read"
+            subject="Mail intermittendly available"
+            vector="Email"
+          />
+        </Card>
+      </Col>
+    </Row>
+  </CardDeck>
+</Container>
+`;

@@ -43,7 +43,7 @@ such that there is less disruption / bugs / thinking as you move between environ
 export const handleUpdates = () => {
   // mockJsonUpdate = await mockJsonUpdate;
   return async (dispatch) => {
-    dispatch({type: CLEAR_DATA})
+    // dispatch({type: CLEAR_DATA})
     dispatch({type: UPDATE_JSON, response: mockJsonUpdate, isUpdate: true})
     dispatch({type: INVITES_REQUEST_SUCCESS})
   }

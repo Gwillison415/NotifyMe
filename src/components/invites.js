@@ -10,7 +10,7 @@ export const InvitesComponent = ({invites, invitesById, ids}) => {
   let unreadInvitations = [];
   let readInvitations = [];
 
-  
+
 
   ids.forEach((id, idx) => {
 
@@ -78,7 +78,7 @@ export const mapStateToProps = (state, ownProps) => {
 
   return { ids, invitesById};
 };
-const mapDispatchToProps = dispatch => bindActionCreators({clearData}, dispatch)
+export const mapDispatchToProps = dispatch => bindActionCreators({clearData}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvitesComponent);
 // export default InvitesComponent

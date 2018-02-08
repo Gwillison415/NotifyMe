@@ -1,4 +1,4 @@
-export const invitationsTest = 
+export const invitationsTest = {
   "invites": [
     {
       "invite_id": 1,
@@ -58,6 +58,6 @@ export const invitationsTest =
       isJoinRequest: true
     }
   ]
-
+}
 
 // export default invitationsJson;
